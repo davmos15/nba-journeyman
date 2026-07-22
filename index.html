@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Journeyman — NBA</title>
+<meta name="description" content="Guess the footy player from their career, one season at a time.">
+<meta name="theme-color" content="#1A2820">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNyIgZmlsbD0iIzFBMjgyMCIvPjxnIHRyYW5zZm9ybT0icm90YXRlKC00MCAxNiAxNikiPjxlbGxpcHNlIGN4PSIxNiIgY3k9IjE2IiByeD0iNi42IiByeT0iMTIuMiIgZmlsbD0iI0YyQzIzMCIgc3Ryb2tlPSIjMTcyNTFEIiBzdHJva2Utd2lkdGg9IjEuNSIvPjxsaW5lIHgxPSIxNiIgeTE9IjYuNCIgeDI9IjE2IiB5Mj0iMjUuNiIgc3Ryb2tlPSIjMTcyNTFEIiBzdHJva2Utd2lkdGg9IjEuNSIvPjxsaW5lIHgxPSIxMi44IiB5MT0iMTEuNSIgeDI9IjE5LjIiIHkyPSIxMS41IiBzdHJva2U9IiMxNzI1MUQiIHN0cm9rZS13aWR0aD0iMS41Ii8+PGxpbmUgeDE9IjEyLjYiIHkxPSIxNiIgeDI9IjE5LjQiIHkyPSIxNiIgc3Ryb2tlPSIjMTcyNTFEIiBzdHJva2Utd2lkdGg9IjEuNSIvPjxsaW5lIHgxPSIxMi44IiB5MT0iMjAuNSIgeDI9IjE5LjIiIHkyPSIyMC41IiBzdHJva2U9IiMxNzI1MUQiIHN0cm9rZS13aWR0aD0iMS41Ii8+PC9nPjwvc3ZnPg==">
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNyIgZmlsbD0iIzFBMjgyMCIvPjxnIHRyYW5zZm9ybT0icm90YXRlKC00MCAxNiAxNikiPjxlbGxpcHNlIGN4PSIxNiIgY3k9IjE2IiByeD0iNi42IiByeT0iMTIuMiIgZmlsbD0iI0YyQzIzMCIgc3Ryb2tlPSIjMTcyNTFEIiBzdHJva2Utd2lkdGg9IjEuNSIvPjxsaW5lIHgxPSIxNiIgeTE9IjYuNCIgeDI9IjE2IiB5Mj0iMjUuNiIgc3Ryb2tlPSIjMTcyNTFEIiBzdHJva2Utd2lkdGg9IjEuNSIvPjxsaW5lIHgxPSIxMi44IiB5MT0iMTEuNSIgeDI9IjE5LjIiIHkyPSIxMS41IiBzdHJva2U9IiMxNzI1MUQiIHN0cm9rZS13aWR0aD0iMS41Ii8+PGxpbmUgeDE9IjEyLjYiIHkxPSIxNiIgeDI9IjE5LjQiIHkyPSIxNiIgc3Ryb2tlPSIjMTcyNTFEIiBzdHJva2Utd2lkdGg9IjEuNSIvPjxsaW5lIHgxPSIxMi44IiB5MT0iMjAuNSIgeDI9IjE5LjIiIHkyPSIyMC41IiBzdHJva2U9IiMxNzI1MUQiIHN0cm9rZS13aWR0aD0iMS41Ii8+PC9nPjwvc3ZnPg==">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4W2RH8JMV4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-4W2RH8JMV4');
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700&family=Archivo+Black&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0F1512; --felt:#1A2820; --felt2:#22332A; --line:#2C3B31;
+  --paper:#EFE9D8; --sherrin:#F2C230; --flag:#E4E9E2; --dim:#8FA096;
+  --err:#C8503C; --ok:#5BA470;
+  --radius:10px;
+}
+[data-theme="light"]{
+  --ink:#EFE9D8; --felt:#FFFFFF; --felt2:#F4EFE1; --line:#D8D0BA;
+  --flag:#17251D; --dim:#6B7A6F; --sherrin:#B8860B;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{height:100%}
+body{
+  min-height:100%; background:var(--ink); color:var(--flag);
+  font-family:'Archivo',system-ui,sans-serif; font-size:16px;
+  display:flex; flex-direction:column;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+button{font-family:inherit;color:inherit;background:none;border:none;cursor:pointer}
+input{font-family:inherit}
+
+/* ---------- header ---------- */
+header{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:12px 16px 8px; max-width:560px; width:100%; margin:0 auto;
+}
+.wordmark{font-family:'Archivo Black',sans-serif; font-size:20px; letter-spacing:.5px; line-height:1}
+.wordmark small{display:block; font-family:'IBM Plex Mono',monospace; font-weight:400;
+  font-size:10px; letter-spacing:3px; color:var(--sherrin); margin-top:3px}
+.hbtns{display:flex; gap:4px}
+.hbtn{width:40px;height:40px;border-radius:8px;display:grid;place-items:center;font-size:18px}
+.hbtn:active{background:var(--felt)}
+a.hbtn{color:inherit;text-decoration:none}
+.coffeebtn{font-size:17px}
+.coffeebtn:hover{background:var(--felt)}
+
+/* ---------- mode tabs ---------- */
+.tabs{display:flex; gap:8px; padding:8px 16px; max-width:560px; width:100%; margin:0 auto}
+.tab{
+  flex:1; padding:10px 0; border-radius:var(--radius); font-weight:600; font-size:14px;
+  background:var(--felt); color:var(--dim); border:1px solid var(--line);
+}
+.tab.on{background:var(--felt2); color:var(--flag); border-color:var(--sherrin)}
+.tab .sub{display:block;font-size:10px;font-weight:400;font-family:'IBM Plex Mono',monospace;margin-top:2px}
+
+/* ---------- main / table ---------- */
+main{flex:1; width:100%; max-width:560px; margin:0 auto; padding:8px 16px 140px}
+.meta{
+  display:flex; justify-content:space-between; align-items:baseline;
+  font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--flag);
+  padding:6px 2px;
+}
+.meta b{color:var(--sherrin);font-weight:600}
+.card{
+  background:var(--felt); border:1px solid var(--line); border-radius:var(--radius);
+  overflow:hidden;
+}
+table{width:100%; border-collapse:collapse; font-family:'IBM Plex Mono',monospace; font-size:12px}
+thead th{
+  text-align:right; padding:9px 5px; font-weight:600; font-size:10px; letter-spacing:.5px;
+  color:var(--dim); border-bottom:1px solid var(--line); text-transform:uppercase; cursor:help;
+  vertical-align:bottom;
+}
+.qual{display:block; font-size:8px; font-weight:600; letter-spacing:.5px; color:var(--dim); opacity:.55; margin-bottom:2px}
+/* full stat words when there's room; abbreviations on narrow screens */
+.hlong{display:none} .hshort{display:inline}
+@media (min-width:560px){ .hlong{display:inline} .hshort{display:none} table{font-size:13px} thead th{padding:10px 7px} td{padding:10px 7px} }
+thead th:first-child, td:first-child{text-align:left}
+thead th:nth-child(2), td:nth-child(2){text-align:left}
+td{padding:9px 5px; border-bottom:1px solid var(--line); text-align:right; white-space:nowrap}
+tr:last-child td{border-bottom:none}
+tr.season{animation:print .45s ease both}
+@keyframes print{from{opacity:0; transform:translateY(-6px)} to{opacity:1; transform:none}}
+@media (prefers-reduced-motion: reduce){ tr.season{animation:none} }
+tr.masked td{color:var(--line); letter-spacing:2px}
+.clubdot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;vertical-align:baseline}
+tr.bonus td{color:var(--sherrin)}
+
+/* ---------- feedback chips ---------- */
+.chips{display:flex; flex-wrap:wrap; gap:6px; padding:10px 2px}
+.chip{
+  font-family:'IBM Plex Mono',monospace; font-size:11px; padding:6px 10px;
+  border-radius:999px; border:1px solid var(--line); background:var(--felt); color:var(--dim);
+}
+.chip.yes{border-color:var(--ok); color:var(--ok)}
+.chip.no{border-color:var(--err); color:var(--err)}
+
+/* ---------- guess history ---------- */
+.guesses{display:flex; flex-direction:column; gap:6px; padding:4px 0}
+.guessrow{
+  display:flex; justify-content:space-between; align-items:center;
+  background:var(--felt); border:1px solid var(--line); border-radius:8px;
+  padding:9px 12px; font-size:14px; animation:print .3s ease both;
+}
+.guessrow .n{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--dim)}
+.guessrow.wrong{border-left:3px solid var(--err)}
+.guessrow.right{border-left:3px solid var(--ok)}
+
+/* ---------- sticky guess bar ---------- */
+.guessbar{
+  position:fixed; left:0; right:0; bottom:0; z-index:20;
+  background:linear-gradient(transparent, var(--ink) 24%);
+  padding:20px 16px calc(14px + env(safe-area-inset-bottom));
+}
+.guessbar .inner{max-width:560px;margin:0 auto;position:relative}
+.acwrap{position:absolute; left:0; right:0; bottom:calc(100% + 6px); max-height:220px; overflow:auto;
+  background:var(--felt2); border:1px solid var(--line); border-radius:var(--radius); display:none}
+.acwrap.open{display:block}
+.acitem{width:100%; text-align:left; padding:12px 14px; font-size:15px; border-bottom:1px solid var(--line)}
+.acitem:last-child{border-bottom:none}
+.acitem:active,.acitem.hl{background:var(--felt)}
+.acitem small{color:var(--dim); font-family:'IBM Plex Mono',monospace; font-size:10px; margin-left:8px}
+.inputrow{display:flex; gap:8px}
+#guessInput{
+  flex:1; background:var(--felt); border:1px solid var(--line); border-radius:var(--radius);
+  color:var(--flag); font-size:16px; padding:14px 14px; outline:none;
+}
+#guessInput:focus{border-color:var(--sherrin)}
+#guessInput::placeholder{color:var(--dim)}
+.go{
+  background:var(--sherrin); color:#17251D; font-weight:700; font-size:14px;
+  padding:0 20px; border-radius:var(--radius);
+}
+.go:disabled{opacity:.35}
+.remain{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--dim);text-align:center;padding-top:8px}
+.remain b{color:var(--sherrin)}
+.aux{display:flex;gap:8px;padding-top:8px}
+.auxbtn{flex:1;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--dim);
+  border:1px solid var(--line);border-radius:8px;padding:9px 4px;background:var(--felt)}
+.auxbtn:active{border-color:var(--sherrin);color:var(--flag)}
+.auxbtn:disabled{opacity:.3}
+.guessrow.skip{border-left:3px solid var(--line);color:var(--dim)}
+.sharefallback{display:none;margin-top:12px;background:var(--felt);border:1px solid var(--line);
+  border-radius:8px;padding:12px;font-family:'IBM Plex Mono',monospace;font-size:12px;
+  white-space:pre-wrap;user-select:all;-webkit-user-select:all}
+
+/* ---------- modal ---------- */
+.overlay{
+  position:fixed; inset:0; background:rgba(6,10,8,.72); z-index:40;
+  display:none; align-items:flex-end; justify-content:center;
+}
+.overlay.open{display:flex}
+.sheet{
+  background:var(--ink); border:1px solid var(--line); border-bottom:none;
+  border-radius:16px 16px 0 0; width:100%; max-width:560px; max-height:86vh; overflow:auto;
+  padding:20px 20px calc(24px + env(safe-area-inset-bottom));
+  animation:up .25s ease both;
+}
+@keyframes up{from{transform:translateY(30px);opacity:0} to{transform:none;opacity:1}}
+@media (prefers-reduced-motion: reduce){ .sheet{animation:none} }
+.sheet h2{font-family:'Archivo Black',sans-serif; font-size:18px; margin-bottom:14px}
+.sheet p{font-size:14px; line-height:1.55; color:var(--dim); margin-bottom:10px}
+.sheet p b{color:var(--flag)}
+.closex{position:sticky; top:0; float:right; font-size:20px; color:var(--dim); padding:4px 8px}
+.bigresult{text-align:center; padding:10px 0 4px}
+.bigresult .who{font-family:'Archivo Black',sans-serif; font-size:26px; margin:6px 0 2px}
+.bigresult .tag{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--dim); letter-spacing:1px}
+.bigresult .verdict{font-size:13px; color:var(--sherrin); font-weight:600; margin-top:8px}
+.sharebtn{
+  display:block; width:100%; margin-top:16px; background:var(--sherrin); color:#17251D;
+  font-weight:700; font-size:15px; padding:14px; border-radius:var(--radius); text-align:center;
+}
+.ghost{
+  display:block; width:100%; margin-top:8px; border:1px solid var(--line);
+  font-weight:600; font-size:14px; padding:13px; border-radius:var(--radius); color:var(--dim); text-align:center;
+}
+/* stats */
+.statgrid{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:16px}
+.statbox{background:var(--felt); border:1px solid var(--line); border-radius:8px; padding:10px 6px; text-align:center}
+.statbox .v{font-family:'Archivo Black',sans-serif; font-size:20px}
+.statbox .l{font-size:10px; color:var(--dim); margin-top:2px}
+.dist{display:flex; flex-direction:column; gap:5px}
+.distrow{display:flex; align-items:center; gap:8px; font-family:'IBM Plex Mono',monospace; font-size:11px}
+.distbar{height:18px; background:var(--felt2); border-radius:4px; min-width:22px;
+  display:flex; align-items:center; justify-content:flex-end; padding:0 6px; color:var(--flag)}
+.distbar.hit{background:var(--sherrin); color:#17251D; font-weight:600}
+/* settings */
+.setrow{display:flex; justify-content:space-between; align-items:center; padding:14px 0; border-bottom:1px solid var(--line)}
+.setrow:last-child{border-bottom:none}
+.setrow .t{font-size:15px; font-weight:600}
+.setrow .d{font-size:12px; color:var(--dim); margin-top:2px}
+.toggle{width:50px; height:28px; border-radius:999px; background:var(--felt2); border:1px solid var(--line); position:relative; flex-shrink:0}
+.toggle::after{content:""; position:absolute; top:3px; left:3px; width:20px; height:20px; border-radius:50%; background:var(--dim); transition:transform .18s}
+.toggle.on{background:var(--sherrin); border-color:var(--sherrin)}
+.toggle.on::after{background:#17251D; transform:translateX(22px)}
+.toast{
+  position:fixed; left:50%; bottom:120px; transform:translateX(-50%); z-index:60;
+  background:var(--felt2); border:1px solid var(--sherrin); border-radius:999px;
+  padding:10px 18px; font-size:13px; font-weight:600; opacity:0; pointer-events:none; transition:opacity .25s;
+}
+.toast.show{opacity:1}
+.examplerow{font-family:'IBM Plex Mono',monospace;font-size:12px;background:var(--felt);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin:8px 0;color:var(--flag)}
+.sitefoot{max-width:560px;margin:0 auto;padding:22px 16px 8px;text-align:center}
+.sitefoot .yrs{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--dim);line-height:1.6}
+.sitefoot .yrs a{color:var(--dim);text-decoration:underline}
+.coffee{display:inline-flex;align-items:center;gap:8px;margin-top:12px;background:#FFDD00;color:#17251D;
+  font-weight:700;font-size:14px;padding:11px 18px;border-radius:10px;text-decoration:none}
+.coffee:active{opacity:.85}
+.coffee .cup{font-size:16px}
+.coffeeghost{display:inline-flex;align-items:center;gap:8px;justify-content:center;width:100%;margin-top:8px;
+  border:1px solid #FFDD00;color:var(--flag);font-weight:600;font-size:14px;padding:12px;border-radius:10px;text-decoration:none}
+</style>
+</head>
+<body data-theme="dark">
+
+<header>
+  <div class="wordmark">JOURNEYMAN<small>FOOTY EDITION</small></div>
+  <div class="hbtns">
+    <a class="hbtn coffeebtn" id="coffeeMain" href="#" target="_blank" rel="noopener" aria-label="Buy me a coffee" title="Buy me a coffee">☕</a>
+    <button class="hbtn" id="btnHelp" aria-label="How to play">?</button>
+    <button class="hbtn" id="btnStats" aria-label="Your stats">▤</button>
+    <button class="hbtn" id="btnSettings" aria-label="Settings">⚙</button>
+  </div>
+</header>
+
+<div class="tabs">
+  <button class="tab on" id="tabDaily">Daily<span class="sub" id="dailyNo">#1</span></button>
+  <button class="tab" id="tabPractice">Practice<span class="sub">unlimited</span></button>
+</div>
+
+<main>
+  <div class="meta">
+    <span id="metaLeft">CAREER RECORD</span>
+    <span id="metaRight"></span>
+  </div>
+  <div class="card">
+    <table aria-live="polite">
+      <thead><tr>
+        <th data-info="The season (shown by its end year, e.g. 1997 = 1996-97)." title="Season (end year).">Year</th>
+        <th data-info="Team that season (tap for full name)." title="Team that season.">Team</th>
+        <th data-info="Games played that season." title="Games played that season."><span class="hlong">Games</span><span class="hshort">GP</span></th>
+        <th data-info="Points per game that season." title="Points per game."><span class="qual">avg</span><span class="hlong">Points</span><span class="hshort">PPG</span></th>
+        <th data-info="Rebounds per game that season." title="Rebounds per game."><span class="qual">avg</span><span class="hlong">Rebounds</span><span class="hshort">RPG</span></th>
+        <th data-info="Assists per game that season." title="Assists per game."><span class="qual">avg</span><span class="hlong">Assists</span><span class="hshort">APG</span></th>
+        <th data-info="Steals per game that season." title="Steals per game."><span class="qual">avg</span><span class="hlong">Steals</span><span class="hshort">SPG</span></th>
+        <th data-info="Blocks per game that season." title="Blocks per game."><span class="qual">avg</span><span class="hlong">Blocks</span><span class="hshort">BPG</span></th>
+      </tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+  <div class="chips" id="chips"></div>
+  <div class="guesses" id="guessList"></div>
+
+  <footer class="sitefoot">
+    <div class="yrs" id="dataYears"></div>
+  </footer>
+</main>
+
+<div class="guessbar" id="guessbar">
+  <div class="inner">
+    <div class="acwrap" id="ac"></div>
+    <div class="inputrow">
+      <input id="guessInput" type="text" autocomplete="off" autocapitalize="words" placeholder="Guess the player…" aria-label="Guess the player">
+      <button class="go" id="btnGo" disabled>Guess</button>
+    </div>
+    <div class="remain" id="remain"></div>
+    <div class="aux">
+      <button class="auxbtn" id="btnClue">Next clue (uses a guess)</button>
+      <button class="auxbtn" id="btnGiveUp">Give up</button>
+    </div>
+  </div>
+</div>
+
+<!-- HELP -->
+<div class="overlay" id="ovHelp"><div class="sheet">
+  <button class="closex" data-close>✕</button>
+  <h2>How to play</h2>
+  <p>A mystery player's <b>career record</b> is revealed one season at a time, in a random order.</p>
+  <p>Every wrong guess reveals <b>another season</b> of their career. Fewer seasons, more bragging rights.</p>
+  <div class="examplerow">2011&nbsp;&nbsp;■ SYD&nbsp;&nbsp;22&nbsp;&nbsp;31&nbsp;&nbsp;9&nbsp;&nbsp;14.2&nbsp;&nbsp;4.1&nbsp;&nbsp;5</div>
+  <p>Each season shows <b>games played</b> and per-game averages for <b>points</b>, <b>rebounds</b>, <b>assists</b>, <b>steals</b>, and <b>blocks</b>. Tap any column heading — or a team code — for what it means.</p>
+  <p>After each wrong guess you also get <b>clues</b> comparing your guess to the answer — shared team, position, and whether the mystery player debuted earlier or later.</p>
+  <p><b>Normal:</b> 8 guesses. <b>Hard mode:</b> 5 guesses, teams hidden, no clue chips.</p>
+  <p>Daily All-Time and per-decade games, or hit Practice for unlimited random players.</p>
+</div></div>
+
+<!-- STATS -->
+<div class="overlay" id="ovStats"><div class="sheet">
+  <button class="closex" data-close>✕</button>
+  <h2>Your record</h2>
+  <div class="statgrid" id="statGrid"></div>
+  <p style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1px;margin-bottom:6px">GUESS DISTRIBUTION (DAILY)</p>
+  <div class="dist" id="dist"></div>
+</div></div>
+
+<!-- SETTINGS -->
+<div class="overlay" id="ovSettings"><div class="sheet">
+  <button class="closex" data-close>✕</button>
+  <h2>Settings</h2>
+  <div class="setrow">
+    <div><div class="t">Hard mode</div><div class="d">5 guesses, teams hidden, no clue chips. Applies from your next game.</div></div>
+    <button class="toggle" id="tglHard" role="switch" aria-label="Hard mode"></button>
+  </div>
+  <div class="setrow">
+    <div><div class="t">Light theme</div><div class="d">For playing in bright light.</div></div>
+    <button class="toggle" id="tglLight" role="switch" aria-label="Light theme"></button>
+  </div>
+  <div class="setrow">
+    <div><div class="t">About</div><div class="d">Journeyman is a fan-made stats game covering NBA seasons. Not affiliated with the NBA or any team. Player stats are public facts via NBA.com; no logos or player images are used. If you enjoy it, the ☕ button on the main screen helps keep it running.</div></div>
+  </div>
+</div></div>
+
+<!-- RESULT -->
+<div class="overlay" id="ovResult"><div class="sheet">
+  <button class="closex" data-close>✕</button>
+  <div class="bigresult">
+    <div class="tag" id="resTag">JOURNEYMAN #1</div>
+    <div class="who" id="resWho"></div>
+    <div class="tag" id="resCareer"></div>
+    <div class="verdict" id="resVerdict"></div>
+  </div>
+  <button class="sharebtn" id="btnShare">Share result</button>
+  <pre class="sharefallback" id="shareFallback"></pre>
+  <a class="coffeeghost" id="coffeeResult" href="#" target="_blank" rel="noopener"><span>☕</span> Enjoying this? Buy me a coffee</a>
+  <button class="ghost" id="btnAgain">Play practice game</button>
+</div></div>
+
+<div class="toast" id="toast">Copied</div>
+
+<script>
+/* =====================================================================
+   JOURNEYMAN — FOOTY EDITION
+   ---------------------------------------------------------------------
+   Data is loaded at runtime from players.json (see loadData below), built
+   by build_players.py from fitzRoy's redistributed AFL Tables dataset.
+   Clubs are plain text + colour swatch only (no logos = no IP issues).
+   ===================================================================== */
+
+/* ┌─────────────────────────────────────────────────────────────────┐
+   │  SITE CONFIG — edit these.                                        │
+   └─────────────────────────────────────────────────────────────────┘ */
+const COFFEE_URL = "https://buymeacoffee.com/nadavmoskow";  // ← set your Buy Me a Coffee URL
+const SITE_URL = "";  // ← canonical URL used in the "Play it yourself" share link; leave "" to use the page's own address
+const DATA_SOURCE_NOTE = "Career data from the 2000 season onwards"; // years auto-filled from data too
+
+const CLUB_COLOURS = {
+  "Adelaide":"#0A2240","Brisbane":"#7C003E","Carlton":"#0E1E2D","Collingwood":"#000000",
+  "Essendon":"#CC2031","Fremantle":"#2A0D54","Geelong":"#1C3C63","Gold Coast":"#D93A39",
+  "GWS":"#F47920","Hawthorn":"#4D2004","Melbourne":"#0F1131","North Melbourne":"#013B9F",
+  "Port Adelaide":"#008AAB","Richmond":"#FFD200","St Kilda":"#ED0F05","Sydney":"#ED171F",
+  "West Coast":"#062EE2","Western Bulldogs":"#014896","Fitzroy":"#8B1E3F"
+};
+// short club codes shown in the table to save space (full name on hover)
+const CLUB_ABBR = {
+  "Adelaide":"ADEL","Brisbane":"BL","Carlton":"CARL","Collingwood":"COLL",
+  "Essendon":"ESS","Fremantle":"FRE","Geelong":"GEEL","Gold Coast":"GC",
+  "GWS":"GWS","Hawthorn":"HAW","Melbourne":"MELB","North Melbourne":"NM",
+  "Port Adelaide":"PA","Richmond":"RICH","St Kilda":"STK","Sydney":"SYD",
+  "West Coast":"WC","Western Bulldogs":"WB","Fitzroy":"FITZ"
+};
+const clubAbbr = name => CLUB_ABBR[name] || name;
+
+/* ---------------------------------------------------------------------
+   DATA. Loaded from players.json (generated by build_players.py from
+   fitzRoy's redistributed AFL Tables data). If the fetch fails — e.g.
+   opened via file:// or in a sandbox — we fall back to an embedded set
+   of ~60 players so the game still runs. On Netlify the fetch succeeds
+   and you get the full pool.
+   Entry: {name,pos,first,last,clubs[],games,goals,answer,seasons?[]}
+   Only `answer:true` players (which carry `seasons`) can be the mystery.
+   --------------------------------------------------------------------- */
+const FALLBACK = [{"name":"Scott Pendlebury","pos":"MID","first":2006,"last":2026,"clubs":["Collingwood"],"games":437,"goals":208,"answer":true,"seasons":[{"y":2006,"club":"Collingwood","g":9,"gl":4,"d":13.1},{"y":2007,"club":"Collingwood","g":23,"gl":20,"d":18.9},{"y":2008,"club":"Collingwood","g":23,"gl":11,"d":22.5},{"y":2009,"club":"Collingwood","g":21,"gl":8,"d":25.8},{"y":2010,"club":"Collingwood","g":26,"gl":17,"d":26.6},{"y":2011,"club":"Collingwood","g":25,"gl":24,"d":29.7},{"y":2012,"club":"Collingwood","g":21,"gl":11,"d":29.5},{"y":2013,"club":"Collingwood","g":23,"gl":18,"d":29.9},{"y":2014,"club":"Collingwood","g":21,"gl":13,"d":28.4},{"y":2015,"club":"Collingwood","g":22,"gl":15,"d":28.9},{"y":2016,"club":"Collingwood","g":22,"gl":11,"d":28.6},{"y":2017,"club":"Collingwood","g":16,"gl":5,"d":28.1},{"y":2018,"club":"Collingwood","g":25,"gl":9,"d":26.8},{"y":2019,"club":"Collingwood","g":24,"gl":12,"d":27.3},{"y":2020,"club":"Collingwood","g":15,"gl":1,"d":23.7},{"y":2021,"club":"Collingwood","g":18,"gl":4,"d":23.2},{"y":2022,"club":"Collingwood","g":24,"gl":2,"d":23.1},{"y":2023,"club":"Collingwood","g":25,"gl":9,"d":22.8},{"y":2024,"club":"Collingwood","g":20,"gl":7,"d":20.7},{"y":2025,"club":"Collingwood","g":22,"gl":3,"d":22.1},{"y":2026,"club":"Collingwood","g":12,"gl":4,"d":23.8}]},{"name":"Shaun Burgoyne","pos":"MID/FWD","first":2002,"last":2021,"clubs":["Port Adelaide","Hawthorn"],"games":407,"goals":302,"answer":true,"seasons":[{"y":2002,"club":"Port Adelaide","g":17,"gl":24,"d":8.5},{"y":2003,"club":"Port Adelaide","g":25,"gl":39,"d":11.2},{"y":2004,"club":"Port Adelaide","g":25,"gl":18,"d":13.8},{"y":2005,"club":"Port Adelaide","g":15,"gl":4,"d":18.5},{"y":2006,"club":"Port Adelaide","g":22,"gl":20,"d":20.8},{"y":2007,"club":"Port Adelaide","g":25,"gl":39,"d":18.9},{"y":2008,"club":"Port Adelaide","g":19,"gl":23,"d":20.2},{"y":2009,"club":"Port Adelaide","g":9,"gl":4,"d":19.4},{"y":2010,"club":"Hawthorn","g":16,"gl":7,"d":22.4},{"y":2011,"club":"Hawthorn","g":24,"gl":16,"d":18.4},{"y":2012,"club":"Hawthorn","g":24,"gl":11,"d":17.8},{"y":2013,"club":"Hawthorn","g":23,"gl":18,"d":20.0},{"y":2014,"club":"Hawthorn","g":25,"gl":12,"d":22.0},{"y":2015,"club":"Hawthorn","g":26,"gl":9,"d":19.4},{"y":2016,"club":"Hawthorn","g":24,"gl":15,"d":19.9},{"y":2017,"club":"Hawthorn","g":22,"gl":17,"d":20.4},{"y":2018,"club":"Hawthorn","g":17,"gl":7,"d":18.6},{"y":2019,"club":"Hawthorn","g":18,"gl":7,"d":16.2},{"y":2020,"club":"Hawthorn","g":13,"gl":11,"d":10.7},{"y":2021,"club":"Hawthorn","g":18,"gl":1,"d":12.1}]},{"name":"Travis Boak","pos":"MID","first":2007,"last":2025,"clubs":["Port Adelaide"],"games":387,"goals":215,"answer":true,"seasons":[{"y":2007,"club":"Port Adelaide","g":14,"gl":4,"d":16.1},{"y":2008,"club":"Port Adelaide","g":17,"gl":9,"d":20.1},{"y":2009,"club":"Port Adelaide","g":18,"gl":7,"d":23.7},{"y":2010,"club":"Port Adelaide","g":20,"gl":13,"d":22.7},{"y":2011,"club":"Port Adelaide","g":21,"gl":12,"d":21.8},{"y":2012,"club":"Port Adelaide","g":18,"gl":9,"d":23.6},{"y":2013,"club":"Port Adelaide","g":23,"gl":20,"d":25.3},{"y":2014,"club":"Port Adelaide","g":24,"gl":19,"d":26.8},{"y":2015,"club":"Port Adelaide","g":22,"gl":13,"d":25.5},{"y":2016,"club":"Port Adelaide","g":22,"gl":17,"d":23.9},{"y":2017,"club":"Port Adelaide","g":22,"gl":19,"d":22.5},{"y":2018,"club":"Port Adelaide","g":22,"gl":19,"d":21.9},{"y":2019,"club":"Port Adelaide","g":21,"gl":10,"d":30.3},{"y":2020,"club":"Port Adelaide","g":19,"gl":8,"d":22.9},{"y":2021,"club":"Port Adelaide","g":23,"gl":8,"d":27.8},{"y":2022,"club":"Port Adelaide","g":21,"gl":10,"d":26.8},{"y":2023,"club":"Port Adelaide","g":21,"gl":7,"d":16.0},{"y":2024,"club":"Port Adelaide","g":23,"gl":5,"d":18.2},{"y":2025,"club":"Port Adelaide","g":16,"gl":6,"d":20.5}]},{"name":"David Mundy","pos":"MID","first":2005,"last":2022,"clubs":["Fremantle"],"games":376,"goals":161,"answer":true,"seasons":[{"y":2005,"club":"Fremantle","g":17,"gl":1,"d":15.5},{"y":2006,"club":"Fremantle","g":25,"gl":1,"d":16.7},{"y":2007,"club":"Fremantle","g":22,"gl":10,"d":16.0},{"y":2008,"club":"Fremantle","g":22,"gl":10,"d":17.0},{"y":2009,"club":"Fremantle","g":22,"gl":15,"d":18.7},{"y":2010,"club":"Fremantle","g":22,"gl":12,"d":23.0},{"y":2011,"club":"Fremantle","g":12,"gl":7,"d":23.8},{"y":2012,"club":"Fremantle","g":22,"gl":8,"d":22.1},{"y":2013,"club":"Fremantle","g":22,"gl":7,"d":24.2},{"y":2014,"club":"Fremantle","g":24,"gl":11,"d":24.5},{"y":2015,"club":"Fremantle","g":23,"gl":10,"d":26.9},{"y":2016,"club":"Fremantle","g":18,"gl":5,"d":23.7},{"y":2017,"club":"Fremantle","g":21,"gl":13,"d":21.3},{"y":2018,"club":"Fremantle","g":22,"gl":19,"d":22.5},{"y":2019,"club":"Fremantle","g":22,"gl":8,"d":22.8},{"y":2020,"club":"Fremantle","g":16,"gl":4,"d":18.1},{"y":2021,"club":"Fremantle","g":22,"gl":15,"d":25.1},{"y":2022,"club":"Fremantle","g":22,"gl":5,"d":22.4}]},{"name":"Patrick Dangerfield","pos":"MID","first":2008,"last":2026,"clubs":["Adelaide","Geelong"],"games":373,"goals":382,"answer":true,"seasons":[{"y":2008,"club":"Adelaide","g":2,"gl":1,"d":6.0},{"y":2009,"club":"Adelaide","g":21,"gl":21,"d":13.0},{"y":2010,"club":"Adelaide","g":19,"gl":26,"d":15.7},{"y":2011,"club":"Adelaide","g":22,"gl":23,"d":17.0},{"y":2012,"club":"Adelaide","g":25,"gl":23,"d":26.7},{"y":2013,"club":"Adelaide","g":20,"gl":31,"d":23.3},{"y":2014,"club":"Adelaide","g":22,"gl":17,"d":24.9},{"y":2015,"club":"Adelaide","g":23,"gl":21,"d":26.8},{"y":2016,"club":"Geelong","g":24,"gl":24,"d":31.8},{"y":2017,"club":"Geelong","g":24,"gl":45,"d":29.9},{"y":2018,"club":"Geelong","g":22,"gl":24,"d":28.1},{"y":2019,"club":"Geelong","g":24,"gl":27,"d":27.1},{"y":2020,"club":"Geelong","g":21,"gl":17,"d":20.8},{"y":2021,"club":"Geelong","g":16,"gl":8,"d":23.2},{"y":2022,"club":"Geelong","g":18,"gl":8,"d":22.4},{"y":2023,"club":"Geelong","g":18,"gl":11,"d":20.5},{"y":2024,"club":"Geelong","g":16,"gl":8,"d":20.1},{"y":2025,"club":"Geelong","g":23,"gl":30,"d":15.2},{"y":2026,"club":"Geelong","g":13,"gl":17,"d":15.2}]},{"name":"Steele Sidebottom","pos":"MID","first":2009,"last":2026,"clubs":["Collingwood"],"games":369,"goals":212,"answer":true,"seasons":[{"y":2009,"club":"Collingwood","g":11,"gl":3,"d":15.2},{"y":2010,"club":"Collingwood","g":25,"gl":24,"d":18.5},{"y":2011,"club":"Collingwood","g":25,"gl":25,"d":19.6},{"y":2012,"club":"Collingwood","g":24,"gl":14,"d":26.5},{"y":2013,"club":"Collingwood","g":23,"gl":19,"d":24.1},{"y":2014,"club":"Collingwood","g":19,"gl":14,"d":26.7},{"y":2015,"club":"Collingwood","g":16,"gl":7,"d":27.3},{"y":2016,"club":"Collingwood","g":20,"gl":17,"d":25.7},{"y":2017,"club":"Collingwood","g":22,"gl":16,"d":27.3},{"y":2018,"club":"Collingwood","g":26,"gl":12,"d":29.4},{"y":2019,"club":"Collingwood","g":23,"gl":10,"d":25.7},{"y":2020,"club":"Collingwood","g":9,"gl":5,"d":23.7},{"y":2021,"club":"Collingwood","g":21,"gl":8,"d":23.8},{"y":2022,"club":"Collingwood","g":25,"gl":12,"d":18.0},{"y":2023,"club":"Collingwood","g":20,"gl":4,"d":20.9},{"y":2024,"club":"Collingwood","g":22,"gl":4,"d":18.3},{"y":2025,"club":"Collingwood","g":23,"gl":15,"d":21.2},{"y":2026,"club":"Collingwood","g":15,"gl":3,"d":16.5}]},{"name":"Brent Harvey","pos":"MID","first":2000,"last":2016,"clubs":["North Melbourne"],"games":368,"goals":452,"answer":true,"seasons":[{"y":2000,"club":"North Melbourne","g":25,"gl":35,"d":21.4},{"y":2001,"club":"North Melbourne","g":20,"gl":17,"d":25.5},{"y":2002,"club":"North Melbourne","g":20,"gl":30,"d":21.4},{"y":2003,"club":"North Melbourne","g":21,"gl":28,"d":21.5},{"y":2004,"club":"North Melbourne","g":21,"gl":30,"d":16.0},{"y":2005,"club":"North Melbourne","g":23,"gl":23,"d":22.3},{"y":2006,"club":"North Melbourne","g":22,"gl":17,"d":24.1},{"y":2007,"club":"North Melbourne","g":25,"gl":36,"d":23.8},{"y":2008,"club":"North Melbourne","g":23,"gl":25,"d":24.7},{"y":2009,"club":"North Melbourne","g":15,"gl":12,"d":22.3},{"y":2010,"club":"North Melbourne","g":22,"gl":25,"d":24.9},{"y":2011,"club":"North Melbourne","g":22,"gl":31,"d":22.4},{"y":2012,"club":"North Melbourne","g":23,"gl":35,"d":22.6},{"y":2013,"club":"North Melbourne","g":16,"gl":19,"d":24.1},{"y":2014,"club":"North Melbourne","g":22,"gl":29,"d":25.4},{"y":2015,"club":"North Melbourne","g":25,"gl":24,"d":22.8},{"y":2016,"club":"North Melbourne","g":23,"gl":36,"d":21.6}]},{"name":"Tom Hawkins","pos":"FWD","first":2007,"last":2024,"clubs":["Geelong"],"games":359,"goals":796,"answer":true,"seasons":[{"y":2007,"club":"Geelong","g":9,"gl":12,"d":8.6},{"y":2008,"club":"Geelong","g":10,"gl":13,"d":11.9},{"y":2009,"club":"Geelong","g":24,"gl":34,"d":11.6},{"y":2010,"club":"Geelong","g":18,"gl":21,"d":12.6},{"y":2011,"club":"Geelong","g":18,"gl":27,"d":12.4},{"y":2012,"club":"Geelong","g":22,"gl":62,"d":12.6},{"y":2013,"club":"Geelong","g":22,"gl":49,"d":9.8},{"y":2014,"club":"Geelong","g":24,"gl":68,"d":12.4},{"y":2015,"club":"Geelong","g":19,"gl":46,"d":10.3},{"y":2016,"club":"Geelong","g":23,"gl":55,"d":12.5},{"y":2017,"club":"Geelong","g":22,"gl":51,"d":13.6},{"y":2018,"club":"Geelong","g":21,"gl":60,"d":15.5},{"y":2019,"club":"Geelong","g":24,"gl":56,"d":12.9},{"y":2020,"club":"Geelong","g":21,"gl":49,"d":12.3},{"y":2021,"club":"Geelong","g":25,"gl":62,"d":13.7},{"y":2022,"club":"Geelong","g":25,"gl":67,"d":13.1},{"y":2023,"club":"Geelong","g":20,"gl":49,"d":10.7},{"y":2024,"club":"Geelong","g":12,"gl":15,"d":9.1}]},{"name":"Gary Ablett","pos":"MID","first":2002,"last":2020,"clubs":["Geelong","Gold Coast"],"games":357,"goals":445,"answer":true,"seasons":[{"y":2002,"club":"Geelong","g":12,"gl":10,"d":8.3},{"y":2003,"club":"Geelong","g":22,"gl":26,"d":14.9},{"y":2004,"club":"Geelong","g":21,"gl":35,"d":14.3},{"y":2005,"club":"Geelong","g":24,"gl":29,"d":18.1},{"y":2006,"club":"Geelong","g":21,"gl":35,"d":16.9},{"y":2007,"club":"Geelong","g":25,"gl":30,"d":26.7},{"y":2008,"club":"Geelong","g":21,"gl":26,"d":28.9},{"y":2009,"club":"Geelong","g":22,"gl":27,"d":33.8},{"y":2010,"club":"Geelong","g":24,"gl":44,"d":31.5},{"y":2011,"club":"Gold Coast","g":20,"gl":18,"d":30.2},{"y":2012,"club":"Gold Coast","g":20,"gl":26,"d":33.8},{"y":2013,"club":"Gold Coast","g":21,"gl":28,"d":31.2},{"y":2014,"club":"Gold Coast","g":15,"gl":24,"d":32.1},{"y":2015,"club":"Gold Coast","g":6,"gl":10,"d":22.8},{"y":2016,"club":"Gold Coast","g":14,"gl":10,"d":27.0},{"y":2017,"club":"Gold Coast","g":14,"gl":8,"d":33.0},{"y":2018,"club":"Geelong","g":19,"gl":16,"d":29.1},{"y":2019,"club":"Geelong","g":24,"gl":34,"d":20.1},{"y":2020,"club":"Geelong","g":12,"gl":9,"d":14.9}]},{"name":"Joel Selwood","pos":"MID","first":2007,"last":2022,"clubs":["Geelong"],"games":355,"goals":175,"answer":true,"seasons":[{"y":2007,"club":"Geelong","g":21,"gl":7,"d":19.2},{"y":2008,"club":"Geelong","g":24,"gl":6,"d":25.3},{"y":2009,"club":"Geelong","g":25,"gl":11,"d":27.5},{"y":2010,"club":"Geelong","g":24,"gl":9,"d":28.2},{"y":2011,"club":"Geelong","g":20,"gl":15,"d":25.9},{"y":2012,"club":"Geelong","g":21,"gl":13,"d":25.7},{"y":2013,"club":"Geelong","g":25,"gl":30,"d":24.6},{"y":2014,"club":"Geelong","g":24,"gl":24,"d":25.6},{"y":2015,"club":"Geelong","g":20,"gl":14,"d":24.6},{"y":2016,"club":"Geelong","g":24,"gl":9,"d":28.3},{"y":2017,"club":"Geelong","g":21,"gl":7,"d":25.5},{"y":2018,"club":"Geelong","g":23,"gl":7,"d":27.0},{"y":2019,"club":"Geelong","g":23,"gl":6,"d":21.3},{"y":2020,"club":"Geelong","g":15,"gl":4,"d":17.2},{"y":2021,"club":"Geelong","g":24,"gl":6,"d":23.0},{"y":2022,"club":"Geelong","g":21,"gl":7,"d":21.9}]},{"name":"Lance Franklin","pos":"FWD","first":2005,"last":2023,"clubs":["Hawthorn","Sydney"],"games":354,"goals":1066,"answer":true,"seasons":[{"y":2005,"club":"Hawthorn","g":20,"gl":21,"d":10.7},{"y":2006,"club":"Hawthorn","g":14,"gl":31,"d":11.1},{"y":2007,"club":"Hawthorn","g":22,"gl":73,"d":13.3},{"y":2008,"club":"Hawthorn","g":25,"gl":113,"d":15.3},{"y":2009,"club":"Hawthorn","g":21,"gl":67,"d":15.0},{"y":2010,"club":"Hawthorn","g":18,"gl":64,"d":17.8},{"y":2011,"club":"Hawthorn","g":22,"gl":82,"d":18.2},{"y":2012,"club":"Hawthorn","g":19,"gl":69,"d":18.4},{"y":2013,"club":"Hawthorn","g":21,"gl":60,"d":15.7},{"y":2014,"club":"Sydney","g":22,"gl":79,"d":16.7},{"y":2015,"club":"Sydney","g":17,"gl":47,"d":14.7},{"y":2016,"club":"Sydney","g":26,"gl":81,"d":17.6},{"y":2017,"club":"Sydney","g":24,"gl":73,"d":16.9},{"y":2018,"club":"Sydney","g":19,"gl":57,"d":15.2},{"y":2019,"club":"Sydney","g":10,"gl":27,"d":11.7},{"y":2021,"club":"Sydney","g":18,"gl":51,"d":11.8},{"y":2022,"club":"Sydney","g":23,"gl":52,"d":11.5},{"y":2023,"club":"Sydney","g":13,"gl":19,"d":9.4}]},{"name":"Matthew Pavlich","pos":"MID/FWD","first":2000,"last":2016,"clubs":["Fremantle"],"games":353,"goals":700,"answer":true,"seasons":[{"y":2000,"club":"Fremantle","g":18,"gl":14,"d":12.1},{"y":2001,"club":"Fremantle","g":21,"gl":28,"d":13.8},{"y":2002,"club":"Fremantle","g":22,"gl":10,"d":18.7},{"y":2003,"club":"Fremantle","g":23,"gl":37,"d":19.5},{"y":2004,"club":"Fremantle","g":22,"gl":19,"d":21.2},{"y":2005,"club":"Fremantle","g":22,"gl":61,"d":16.9},{"y":2006,"club":"Fremantle","g":25,"gl":71,"d":15.8},{"y":2007,"club":"Fremantle","g":22,"gl":72,"d":17.3},{"y":2008,"club":"Fremantle","g":19,"gl":67,"d":18.2},{"y":2009,"club":"Fremantle","g":19,"gl":28,"d":21.7},{"y":2010,"club":"Fremantle","g":23,"gl":61,"d":18.9},{"y":2011,"club":"Fremantle","g":20,"gl":21,"d":23.6},{"y":2012,"club":"Fremantle","g":23,"gl":69,"d":17.4},{"y":2013,"club":"Fremantle","g":12,"gl":25,"d":14.2},{"y":2014,"club":"Fremantle","g":22,"gl":46,"d":14.9},{"y":2015,"club":"Fremantle","g":22,"gl":40,"d":14.5},{"y":2016,"club":"Fremantle","g":18,"gl":31,"d":13.7}]},{"name":"Adam Goodes","pos":"MID/FWD","first":2000,"last":2015,"clubs":["Sydney"],"games":352,"goals":445,"answer":true,"seasons":[{"y":2000,"club":"Sydney","g":22,"gl":40,"d":13.4},{"y":2001,"club":"Sydney","g":23,"gl":34,"d":14.3},{"y":2002,"club":"Sydney","g":22,"gl":21,"d":15.9},{"y":2003,"club":"Sydney","g":24,"gl":20,"d":18.0},{"y":2004,"club":"Sydney","g":24,"gl":9,"d":14.0},{"y":2005,"club":"Sydney","g":26,"gl":23,"d":17.3},{"y":2006,"club":"Sydney","g":25,"gl":25,"d":20.8},{"y":2007,"club":"Sydney","g":23,"gl":9,"d":20.2},{"y":2008,"club":"Sydney","g":21,"gl":29,"d":17.1},{"y":2009,"club":"Sydney","g":22,"gl":38,"d":21.3},{"y":2010,"club":"Sydney","g":24,"gl":44,"d":20.0},{"y":2011,"club":"Sydney","g":24,"gl":41,"d":21.3},{"y":2012,"club":"Sydney","g":19,"gl":37,"d":17.5},{"y":2013,"club":"Sydney","g":12,"gl":20,"d":17.8},{"y":2014,"club":"Sydney","g":20,"gl":30,"d":13.3},{"y":2015,"club":"Sydney","g":21,"gl":25,"d":15.6}]},{"name":"Eddie Betts","pos":"FWD","first":2005,"last":2021,"clubs":["Carlton","Adelaide"],"games":350,"goals":640,"answer":true,"seasons":[{"y":2005,"club":"Carlton","g":19,"gl":19,"d":6.4},{"y":2006,"club":"Carlton","g":21,"gl":20,"d":10.9},{"y":2007,"club":"Carlton","g":17,"gl":21,"d":11.9},{"y":2008,"club":"Carlton","g":18,"gl":25,"d":12.9},{"y":2009,"club":"Carlton","g":22,"gl":38,"d":12.0},{"y":2010,"club":"Carlton","g":23,"gl":42,"d":13.8},{"y":2011,"club":"Carlton","g":24,"gl":50,"d":12.4},{"y":2012,"club":"Carlton","g":22,"gl":48,"d":13.0},{"y":2013,"club":"Carlton","g":18,"gl":27,"d":11.7},{"y":2014,"club":"Adelaide","g":22,"gl":51,"d":13.2},{"y":2015,"club":"Adelaide","g":23,"gl":63,"d":13.6},{"y":2016,"club":"Adelaide","g":24,"gl":75,"d":13.3},{"y":2017,"club":"Adelaide","g":24,"gl":55,"d":13.2},{"y":2018,"club":"Adelaide","g":18,"gl":29,"d":13.3},{"y":2019,"club":"Adelaide","g":21,"gl":37,"d":12.0},{"y":2020,"club":"Carlton","g":15,"gl":13,"d":8.9},{"y":2021,"club":"Carlton","g":19,"gl":27,"d":9.5}]},{"name":"Jack Riewoldt","pos":"FWD","first":2007,"last":2023,"clubs":["Richmond"],"games":347,"goals":787,"answer":true,"seasons":[{"y":2007,"club":"Richmond","g":8,"gl":7,"d":6.6},{"y":2008,"club":"Richmond","g":18,"gl":18,"d":10.8},{"y":2009,"club":"Richmond","g":20,"gl":32,"d":12.9},{"y":2010,"club":"Richmond","g":22,"gl":78,"d":11.6},{"y":2011,"club":"Richmond","g":22,"gl":62,"d":11.1},{"y":2012,"club":"Richmond","g":22,"gl":65,"d":13.2},{"y":2013,"club":"Richmond","g":22,"gl":58,"d":12.9},{"y":2014,"club":"Richmond","g":23,"gl":61,"d":12.7},{"y":2015,"club":"Richmond","g":23,"gl":54,"d":13.0},{"y":2016,"club":"Richmond","g":22,"gl":48,"d":14.4},{"y":2017,"club":"Richmond","g":23,"gl":54,"d":13.3},{"y":2018,"club":"Richmond","g":24,"gl":70,"d":14.2},{"y":2019,"club":"Richmond","g":13,"gl":24,"d":10.8},{"y":2020,"club":"Richmond","g":21,"gl":33,"d":8.2},{"y":2021,"club":"Richmond","g":22,"gl":51,"d":10.9},{"y":2022,"club":"Richmond","g":21,"gl":40,"d":11.0},{"y":2023,"club":"Richmond","g":21,"gl":32,"d":9.0}]},{"name":"Luke Hodge","pos":"MID","first":2002,"last":2019,"clubs":["Hawthorn","Brisbane"],"games":346,"goals":194,"answer":true,"seasons":[{"y":2002,"club":"Hawthorn","g":15,"gl":9,"d":15.5},{"y":2003,"club":"Hawthorn","g":15,"gl":10,"d":12.9},{"y":2004,"club":"Hawthorn","g":15,"gl":14,"d":15.7},{"y":2005,"club":"Hawthorn","g":21,"gl":9,"d":27.7},{"y":2006,"club":"Hawthorn","g":22,"gl":6,"d":23.3},{"y":2007,"club":"Hawthorn","g":24,"gl":23,"d":22.5},{"y":2008,"club":"Hawthorn","g":20,"gl":20,"d":23.1},{"y":2009,"club":"Hawthorn","g":19,"gl":10,"d":22.3},{"y":2010,"club":"Hawthorn","g":22,"gl":15,"d":24.7},{"y":2011,"club":"Hawthorn","g":22,"gl":19,"d":24.3},{"y":2012,"club":"Hawthorn","g":10,"gl":9,"d":19.1},{"y":2013,"club":"Hawthorn","g":23,"gl":11,"d":21.8},{"y":2014,"club":"Hawthorn","g":22,"gl":12,"d":25.0},{"y":2015,"club":"Hawthorn","g":21,"gl":21,"d":26.8},{"y":2016,"club":"Hawthorn","g":15,"gl":4,"d":22.9},{"y":2017,"club":"Hawthorn","g":19,"gl":1,"d":23.2},{"y":2018,"club":"Brisbane","g":19,"gl":1,"d":19.5},{"y":2019,"club":"Brisbane","g":22,"gl":0,"d":16.9}]},{"name":"Todd Goldstein","pos":"RUCK","first":2008,"last":2025,"clubs":["North Melbourne","Essendon"],"games":345,"goals":160,"answer":true,"seasons":[{"y":2008,"club":"North Melbourne","g":3,"gl":2,"d":5.3},{"y":2009,"club":"North Melbourne","g":13,"gl":9,"d":8.0},{"y":2010,"club":"North Melbourne","g":21,"gl":10,"d":11.6},{"y":2011,"club":"North Melbourne","g":21,"gl":13,"d":13.7},{"y":2012,"club":"North Melbourne","g":21,"gl":2,"d":12.2},{"y":2013,"club":"North Melbourne","g":22,"gl":13,"d":12.0},{"y":2014,"club":"North Melbourne","g":24,"gl":10,"d":12.0},{"y":2015,"club":"North Melbourne","g":24,"gl":11,"d":14.7},{"y":2016,"club":"North Melbourne","g":22,"gl":20,"d":13.8},{"y":2017,"club":"North Melbourne","g":19,"gl":12,"d":13.4},{"y":2018,"club":"North Melbourne","g":22,"gl":12,"d":14.5},{"y":2019,"club":"North Melbourne","g":22,"gl":5,"d":16.8},{"y":2020,"club":"North Melbourne","g":17,"gl":6,"d":14.9},{"y":2021,"club":"North Melbourne","g":22,"gl":12,"d":14.3},{"y":2022,"club":"North Melbourne","g":22,"gl":16,"d":13.0},{"y":2023,"club":"North Melbourne","g":20,"gl":4,"d":13.0},{"y":2024,"club":"Essendon","g":14,"gl":2,"d":10.2},{"y":2025,"club":"Essendon","g":16,"gl":1,"d":12.0}]},{"name":"Kade Simpson","pos":"MID","first":2003,"last":2020,"clubs":["Carlton"],"games":342,"goals":139,"answer":true,"seasons":[{"y":2003,"club":"Carlton","g":3,"gl":0,"d":0.0},{"y":2004,"club":"Carlton","g":3,"gl":1,"d":4.0},{"y":2005,"club":"Carlton","g":15,"gl":9,"d":11.6},{"y":2006,"club":"Carlton","g":22,"gl":11,"d":19.1},{"y":2007,"club":"Carlton","g":22,"gl":17,"d":18.7},{"y":2008,"club":"Carlton","g":22,"gl":9,"d":18.7},{"y":2009,"club":"Carlton","g":23,"gl":15,"d":21.3},{"y":2010,"club":"Carlton","g":23,"gl":17,"d":23.4},{"y":2011,"club":"Carlton","g":24,"gl":17,"d":22.3},{"y":2012,"club":"Carlton","g":19,"gl":15,"d":22.4},{"y":2013,"club":"Carlton","g":24,"gl":6,"d":22.2},{"y":2014,"club":"Carlton","g":22,"gl":4,"d":23.6},{"y":2015,"club":"Carlton","g":20,"gl":3,"d":23.0},{"y":2016,"club":"Carlton","g":22,"gl":3,"d":27.1},{"y":2017,"club":"Carlton","g":22,"gl":4,"d":24.0},{"y":2018,"club":"Carlton","g":21,"gl":4,"d":26.1},{"y":2019,"club":"Carlton","g":18,"gl":3,"d":20.3},{"y":2020,"club":"Carlton","g":17,"gl":1,"d":15.5}]},{"name":"Nick Riewoldt","pos":"MID/FWD","first":2001,"last":2017,"clubs":["St Kilda"],"games":336,"goals":718,"answer":true,"seasons":[{"y":2001,"club":"St Kilda","g":6,"gl":2,"d":9.5},{"y":2002,"club":"St Kilda","g":22,"gl":21,"d":14.5},{"y":2003,"club":"St Kilda","g":22,"gl":30,"d":16.0},{"y":2004,"club":"St Kilda","g":25,"gl":67,"d":17.3},{"y":2005,"club":"St Kilda","g":16,"gl":33,"d":14.5},{"y":2006,"club":"St Kilda","g":23,"gl":60,"d":16.7},{"y":2007,"club":"St Kilda","g":20,"gl":42,"d":18.1},{"y":2008,"club":"St Kilda","g":24,"gl":65,"d":17.1},{"y":2009,"club":"St Kilda","g":24,"gl":78,"d":17.2},{"y":2010,"club":"St Kilda","g":15,"gl":39,"d":17.1},{"y":2011,"club":"St Kilda","g":22,"gl":36,"d":16.1},{"y":2012,"club":"St Kilda","g":19,"gl":47,"d":14.5},{"y":2013,"club":"St Kilda","g":21,"gl":50,"d":18.6},{"y":2014,"club":"St Kilda","g":22,"gl":49,"d":16.7},{"y":2015,"club":"St Kilda","g":17,"gl":29,"d":16.9},{"y":2016,"club":"St Kilda","g":21,"gl":41,"d":20.8},{"y":2017,"club":"St Kilda","g":17,"gl":29,"d":16.8}]},{"name":"Jack Darling","pos":"FWD","first":2011,"last":2026,"clubs":["West Coast","North Melbourne"],"games":336,"goals":580,"answer":true,"seasons":[{"y":2011,"club":"West Coast","g":23,"gl":24,"d":12.3},{"y":2012,"club":"West Coast","g":24,"gl":53,"d":11.1},{"y":2013,"club":"West Coast","g":21,"gl":42,"d":11.8},{"y":2014,"club":"West Coast","g":22,"gl":39,"d":14.3},{"y":2015,"club":"West Coast","g":15,"gl":26,"d":11.4},{"y":2016,"club":"West Coast","g":23,"gl":44,"d":12.2},{"y":2017,"club":"West Coast","g":23,"gl":43,"d":12.0},{"y":2018,"club":"West Coast","g":21,"gl":48,"d":13.1},{"y":2019,"club":"West Coast","g":24,"gl":59,"d":12.0},{"y":2020,"club":"West Coast","g":18,"gl":30,"d":9.4},{"y":2021,"club":"West Coast","g":22,"gl":42,"d":12.1},{"y":2022,"club":"West Coast","g":21,"gl":34,"d":11.4},{"y":2023,"club":"West Coast","g":20,"gl":26,"d":10.2},{"y":2024,"club":"West Coast","g":21,"gl":22,"d":10.0},{"y":2025,"club":"North Melbourne","g":22,"gl":24,"d":9.8},{"y":2026,"club":"North Melbourne","g":16,"gl":24,"d":10.7}]},{"name":"Brendon Goddard","pos":"MID","first":2003,"last":2018,"clubs":["St Kilda","Essendon"],"games":334,"goals":160,"answer":true,"seasons":[{"y":2003,"club":"St Kilda","g":18,"gl":6,"d":13.3},{"y":2004,"club":"St Kilda","g":24,"gl":4,"d":12.6},{"y":2005,"club":"St Kilda","g":19,"gl":6,"d":14.9},{"y":2006,"club":"St Kilda","g":22,"gl":10,"d":21.7},{"y":2007,"club":"St Kilda","g":7,"gl":3,"d":18.6},{"y":2008,"club":"St Kilda","g":23,"gl":11,"d":23.3},{"y":2009,"club":"St Kilda","g":24,"gl":15,"d":27.2},{"y":2010,"club":"St Kilda","g":25,"gl":24,"d":28.7},{"y":2011,"club":"St Kilda","g":23,"gl":13,"d":23.6},{"y":2012,"club":"St Kilda","g":20,"gl":12,"d":24.4},{"y":2013,"club":"Essendon","g":22,"gl":18,"d":26.1},{"y":2014,"club":"Essendon","g":20,"gl":17,"d":23.1},{"y":2015,"club":"Essendon","g":22,"gl":10,"d":26.4},{"y":2016,"club":"Essendon","g":20,"gl":3,"d":25.9},{"y":2017,"club":"Essendon","g":23,"gl":5,"d":26.7},{"y":2018,"club":"Essendon","g":22,"gl":3,"d":22.3}]},{"name":"Shannon Hurn","pos":"MID","first":2006,"last":2023,"clubs":["West Coast"],"games":333,"goals":50,"answer":true,"seasons":[{"y":2006,"club":"West Coast","g":6,"gl":1,"d":10.0},{"y":2007,"club":"West Coast","g":24,"gl":11,"d":13.7},{"y":2008,"club":"West Coast","g":6,"gl":1,"d":11.7},{"y":2009,"club":"West Coast","g":22,"gl":4,"d":20.0},{"y":2010,"club":"West Coast","g":15,"gl":4,"d":15.6},{"y":2011,"club":"West Coast","g":25,"gl":5,"d":18.1},{"y":2012,"club":"West Coast","g":24,"gl":12,"d":17.3},{"y":2013,"club":"West Coast","g":12,"gl":1,"d":15.6},{"y":2014,"club":"West Coast","g":18,"gl":4,"d":18.5},{"y":2015,"club":"West Coast","g":25,"gl":3,"d":16.4},{"y":2016,"club":"West Coast","g":23,"gl":3,"d":18.0},{"y":2017,"club":"West Coast","g":23,"gl":0,"d":19.9},{"y":2018,"club":"West Coast","g":25,"gl":1,"d":21.2},{"y":2019,"club":"West Coast","g":21,"gl":0,"d":23.3},{"y":2020,"club":"West Coast","g":17,"gl":0,"d":15.9},{"y":2021,"club":"West Coast","g":15,"gl":0,"d":21.8},{"y":2022,"club":"West Coast","g":19,"gl":0,"d":22.9},{"y":2023,"club":"West Coast","g":13,"gl":0,"d":20.9}]},{"name":"Corey Enright","pos":"MID","first":2001,"last":2016,"clubs":["Geelong"],"games":332,"goals":66,"answer":true,"seasons":[{"y":2001,"club":"Geelong","g":17,"gl":5,"d":11.9},{"y":2002,"club":"Geelong","g":16,"gl":3,"d":18.6},{"y":2003,"club":"Geelong","g":22,"gl":3,"d":18.8},{"y":2004,"club":"Geelong","g":9,"gl":0,"d":12.0},{"y":2005,"club":"Geelong","g":15,"gl":8,"d":18.5},{"y":2006,"club":"Geelong","g":22,"gl":11,"d":22.3},{"y":2007,"club":"Geelong","g":24,"gl":9,"d":22.9},{"y":2008,"club":"Geelong","g":25,"gl":6,"d":23.2},{"y":2009,"club":"Geelong","g":25,"gl":4,"d":25.1},{"y":2010,"club":"Geelong","g":24,"gl":1,"d":24.2},{"y":2011,"club":"Geelong","g":23,"gl":1,"d":22.3},{"y":2012,"club":"Geelong","g":22,"gl":2,"d":21.0},{"y":2013,"club":"Geelong","g":22,"gl":1,"d":22.3},{"y":2014,"club":"Geelong","g":22,"gl":8,"d":21.0},{"y":2015,"club":"Geelong","g":21,"gl":0,"d":23.0},{"y":2016,"club":"Geelong","g":23,"gl":4,"d":23.6}]},{"name":"Drew Petrie","pos":"FWD","first":2001,"last":2017,"clubs":["North Melbourne","West Coast"],"games":332,"goals":444,"answer":true,"seasons":[{"y":2001,"club":"North Melbourne","g":9,"gl":0,"d":3.9},{"y":2002,"club":"North Melbourne","g":10,"gl":10,"d":6.7},{"y":2003,"club":"North Melbourne","g":22,"gl":28,"d":10.7},{"y":2004,"club":"North Melbourne","g":22,"gl":20,"d":10.1},{"y":2005,"club":"North Melbourne","g":22,"gl":11,"d":10.4},{"y":2006,"club":"North Melbourne","g":21,"gl":4,"d":14.9},{"y":2007,"club":"North Melbourne","g":25,"gl":38,"d":12.2},{"y":2008,"club":"North Melbourne","g":23,"gl":17,"d":16.0},{"y":2009,"club":"North Melbourne","g":22,"gl":27,"d":15.1},{"y":2010,"club":"North Melbourne","g":2,"gl":0,"d":10.5},{"y":2011,"club":"North Melbourne","g":21,"gl":48,"d":14.0},{"y":2012,"club":"North Melbourne","g":23,"gl":58,"d":12.9},{"y":2013,"club":"North Melbourne","g":22,"gl":48,"d":14.0},{"y":2014,"club":"North Melbourne","g":25,"gl":50,"d":12.1},{"y":2015,"club":"North Melbourne","g":24,"gl":42,"d":13.2},{"y":2016,"club":"North Melbourne","g":23,"gl":27,"d":11.0},{"y":2017,"club":"West Coast","g":16,"gl":16,"d":12.1}]},{"name":"Luke Parker","pos":"MID","first":2011,"last":2026,"clubs":["Sydney","North Melbourne"],"games":332,"goals":227,"answer":true,"seasons":[{"y":2011,"club":"Sydney","g":13,"gl":8,"d":11.7},{"y":2012,"club":"Sydney","g":19,"gl":5,"d":16.0},{"y":2013,"club":"Sydney","g":25,"gl":22,"d":21.0},{"y":2014,"club":"Sydney","g":25,"gl":25,"d":25.9},{"y":2015,"club":"Sydney","g":19,"gl":18,"d":25.6},{"y":2016,"club":"Sydney","g":26,"gl":25,"d":26.9},{"y":2017,"club":"Sydney","g":24,"gl":14,"d":25.3},{"y":2018,"club":"Sydney","g":22,"gl":25,"d":23.0},{"y":2019,"club":"Sydney","g":22,"gl":13,"d":25.4},{"y":2020,"club":"Sydney","g":17,"gl":6,"d":22.2},{"y":2021,"club":"Sydney","g":23,"gl":15,"d":27.9},{"y":2022,"club":"Sydney","g":25,"gl":14,"d":24.4},{"y":2023,"club":"Sydney","g":23,"gl":9,"d":23.6},{"y":2024,"club":"Sydney","g":10,"gl":14,"d":14.1},{"y":2025,"club":"North Melbourne","g":22,"gl":12,"d":23.3},{"y":2026,"club":"North Melbourne","g":17,"gl":2,"d":25.7}]},{"name":"Sam Mitchell","pos":"MID","first":2002,"last":2017,"clubs":["Hawthorn","West Coast"],"games":329,"goals":71,"answer":true,"seasons":[{"y":2002,"club":"Hawthorn","g":9,"gl":1,"d":11.2},{"y":2003,"club":"Hawthorn","g":21,"gl":5,"d":17.8},{"y":2004,"club":"Hawthorn","g":20,"gl":5,"d":18.6},{"y":2005,"club":"Hawthorn","g":14,"gl":2,"d":24.5},{"y":2006,"club":"Hawthorn","g":22,"gl":3,"d":26.9},{"y":2007,"club":"Hawthorn","g":23,"gl":2,"d":25.8},{"y":2008,"club":"Hawthorn","g":24,"gl":4,"d":27.8},{"y":2009,"club":"Hawthorn","g":22,"gl":7,"d":29.7},{"y":2010,"club":"Hawthorn","g":19,"gl":5,"d":27.6},{"y":2011,"club":"Hawthorn","g":23,"gl":12,"d":30.5},{"y":2012,"club":"Hawthorn","g":24,"gl":7,"d":27.2},{"y":2013,"club":"Hawthorn","g":24,"gl":5,"d":28.0},{"y":2014,"club":"Hawthorn","g":16,"gl":3,"d":28.1},{"y":2015,"club":"Hawthorn","g":24,"gl":6,"d":31.2},{"y":2016,"club":"Hawthorn","g":22,"gl":0,"d":29.6},{"y":2017,"club":"West Coast","g":22,"gl":4,"d":26.9}]},{"name":"Callan Ward","pos":"MID","first":2008,"last":2025,"clubs":["Western Bulldogs","GWS"],"games":327,"goals":163,"answer":true,"seasons":[{"y":2008,"club":"Western Bulldogs","g":6,"gl":2,"d":10.0},{"y":2009,"club":"Western Bulldogs","g":22,"gl":18,"d":16.5},{"y":2010,"club":"Western Bulldogs","g":10,"gl":1,"d":17.3},{"y":2011,"club":"Western Bulldogs","g":22,"gl":12,"d":20.8},{"y":2012,"club":"GWS","g":20,"gl":8,"d":24.4},{"y":2013,"club":"GWS","g":21,"gl":11,"d":23.3},{"y":2014,"club":"GWS","g":20,"gl":7,"d":24.9},{"y":2015,"club":"GWS","g":22,"gl":10,"d":25.3},{"y":2016,"club":"GWS","g":24,"gl":16,"d":23.3},{"y":2017,"club":"GWS","g":25,"gl":14,"d":27.1},{"y":2018,"club":"GWS","g":24,"gl":8,"d":26.8},{"y":2019,"club":"GWS","g":1,"gl":0,"d":1.0},{"y":2020,"club":"GWS","g":7,"gl":3,"d":14.9},{"y":2021,"club":"GWS","g":24,"gl":15,"d":22.7},{"y":2022,"club":"GWS","g":22,"gl":8,"d":21.7},{"y":2023,"club":"GWS","g":25,"gl":11,"d":19.6},{"y":2024,"club":"GWS","g":20,"gl":13,"d":18.4},{"y":2025,"club":"GWS","g":12,"gl":6,"d":15.1}]},{"name":"Jarrad McVeigh","pos":"MID/FWD","first":2004,"last":2019,"clubs":["Sydney"],"games":325,"goals":201,"answer":true,"seasons":[{"y":2004,"club":"Sydney","g":20,"gl":6,"d":7.2},{"y":2005,"club":"Sydney","g":13,"gl":4,"d":9.2},{"y":2006,"club":"Sydney","g":25,"gl":21,"d":10.1},{"y":2007,"club":"Sydney","g":23,"gl":11,"d":13.8},{"y":2008,"club":"Sydney","g":24,"gl":32,"d":19.5},{"y":2009,"club":"Sydney","g":18,"gl":14,"d":21.1},{"y":2010,"club":"Sydney","g":24,"gl":16,"d":21.5},{"y":2011,"club":"Sydney","g":22,"gl":19,"d":21.4},{"y":2012,"club":"Sydney","g":25,"gl":18,"d":24.6},{"y":2013,"club":"Sydney","g":25,"gl":16,"d":27.5},{"y":2014,"club":"Sydney","g":25,"gl":15,"d":23.3},{"y":2015,"club":"Sydney","g":22,"gl":12,"d":24.2},{"y":2016,"club":"Sydney","g":21,"gl":8,"d":20.3},{"y":2017,"club":"Sydney","g":13,"gl":7,"d":18.5},{"y":2018,"club":"Sydney","g":19,"gl":1,"d":21.1},{"y":2019,"club":"Sydney","g":6,"gl":1,"d":18.0}]},{"name":"Heath Shaw","pos":"MID","first":2005,"last":2020,"clubs":["Collingwood","GWS"],"games":325,"goals":42,"answer":true,"seasons":[{"y":2005,"club":"Collingwood","g":6,"gl":1,"d":15.0},{"y":2006,"club":"Collingwood","g":22,"gl":9,"d":20.4},{"y":2007,"club":"Collingwood","g":25,"gl":2,"d":19.5},{"y":2008,"club":"Collingwood","g":18,"gl":6,"d":20.3},{"y":2009,"club":"Collingwood","g":21,"gl":2,"d":23.0},{"y":2010,"club":"Collingwood","g":23,"gl":5,"d":21.3},{"y":2011,"club":"Collingwood","g":17,"gl":2,"d":22.2},{"y":2012,"club":"Collingwood","g":21,"gl":9,"d":20.1},{"y":2013,"club":"Collingwood","g":20,"gl":1,"d":19.6},{"y":2014,"club":"GWS","g":18,"gl":0,"d":21.4},{"y":2015,"club":"GWS","g":22,"gl":1,"d":23.5},{"y":2016,"club":"GWS","g":24,"gl":1,"d":24.2},{"y":2017,"club":"GWS","g":25,"gl":0,"d":20.6},{"y":2018,"club":"GWS","g":20,"gl":0,"d":22.2},{"y":2019,"club":"GWS","g":26,"gl":0,"d":20.1},{"y":2020,"club":"GWS","g":17,"gl":3,"d":12.3}]},{"name":"Nick Dal Santo","pos":"MID","first":2002,"last":2016,"clubs":["St Kilda","North Melbourne"],"games":322,"goals":156,"answer":true,"seasons":[{"y":2002,"club":"St Kilda","g":18,"gl":7,"d":10.6},{"y":2003,"club":"St Kilda","g":8,"gl":7,"d":19.0},{"y":2004,"club":"St Kilda","g":25,"gl":11,"d":18.8},{"y":2005,"club":"St Kilda","g":24,"gl":15,"d":22.6},{"y":2006,"club":"St Kilda","g":23,"gl":11,"d":22.1},{"y":2007,"club":"St Kilda","g":22,"gl":9,"d":21.5},{"y":2008,"club":"St Kilda","g":24,"gl":12,"d":22.1},{"y":2009,"club":"St Kilda","g":24,"gl":16,"d":27.9},{"y":2010,"club":"St Kilda","g":25,"gl":16,"d":25.6},{"y":2011,"club":"St Kilda","g":23,"gl":14,"d":26.7},{"y":2012,"club":"St Kilda","g":22,"gl":17,"d":23.3},{"y":2013,"club":"St Kilda","g":22,"gl":5,"d":24.8},{"y":2014,"club":"North Melbourne","g":25,"gl":9,"d":24.7},{"y":2015,"club":"North Melbourne","g":15,"gl":1,"d":23.9},{"y":2016,"club":"North Melbourne","g":22,"gl":6,"d":24.8}]},{"name":"Jordan Lewis","pos":"MID","first":2005,"last":2019,"clubs":["Hawthorn","Melbourne"],"games":319,"goals":161,"answer":true,"seasons":[{"y":2005,"club":"Hawthorn","g":19,"gl":2,"d":16.2},{"y":2006,"club":"Hawthorn","g":20,"gl":5,"d":19.6},{"y":2007,"club":"Hawthorn","g":24,"gl":14,"d":24.8},{"y":2008,"club":"Hawthorn","g":20,"gl":6,"d":25.1},{"y":2009,"club":"Hawthorn","g":19,"gl":9,"d":26.2},{"y":2010,"club":"Hawthorn","g":23,"gl":15,"d":21.9},{"y":2011,"club":"Hawthorn","g":22,"gl":12,"d":22.5},{"y":2012,"club":"Hawthorn","g":22,"gl":27,"d":22.3},{"y":2013,"club":"Hawthorn","g":24,"gl":17,"d":21.8},{"y":2014,"club":"Hawthorn","g":24,"gl":17,"d":27.8},{"y":2015,"club":"Hawthorn","g":23,"gl":9,"d":28.9},{"y":2016,"club":"Hawthorn","g":24,"gl":12,"d":26.4},{"y":2017,"club":"Melbourne","g":19,"gl":5,"d":26.3},{"y":2018,"club":"Melbourne","g":24,"gl":5,"d":22.5},{"y":2019,"club":"Melbourne","g":12,"gl":6,"d":16.1}]},{"name":"Jude Bolton","pos":"MID/FWD","first":2000,"last":2013,"clubs":["Sydney"],"games":316,"goals":193,"answer":true,"seasons":[{"y":2000,"club":"Sydney","g":16,"gl":15,"d":12.4},{"y":2001,"club":"Sydney","g":23,"gl":14,"d":14.0},{"y":2002,"club":"Sydney","g":19,"gl":9,"d":13.8},{"y":2003,"club":"Sydney","g":24,"gl":13,"d":19.9},{"y":2004,"club":"Sydney","g":24,"gl":12,"d":20.5},{"y":2005,"club":"Sydney","g":24,"gl":3,"d":18.8},{"y":2006,"club":"Sydney","g":25,"gl":12,"d":18.7},{"y":2007,"club":"Sydney","g":23,"gl":6,"d":17.9},{"y":2008,"club":"Sydney","g":24,"gl":11,"d":19.8},{"y":2009,"club":"Sydney","g":22,"gl":12,"d":21.4},{"y":2010,"club":"Sydney","g":24,"gl":15,"d":20.8},{"y":2011,"club":"Sydney","g":22,"gl":19,"d":19.5},{"y":2012,"club":"Sydney","g":22,"gl":23,"d":19.8},{"y":2013,"club":"Sydney","g":24,"gl":29,"d":13.8}]},{"name":"James Kelly","pos":"MID","first":2002,"last":2017,"clubs":["Geelong","Essendon"],"games":313,"goals":90,"answer":true,"seasons":[{"y":2002,"club":"Geelong","g":15,"gl":7,"d":14.8},{"y":2003,"club":"Geelong","g":18,"gl":6,"d":13.2},{"y":2004,"club":"Geelong","g":13,"gl":9,"d":18.1},{"y":2005,"club":"Geelong","g":24,"gl":13,"d":18.0},{"y":2006,"club":"Geelong","g":15,"gl":7,"d":16.9},{"y":2007,"club":"Geelong","g":23,"gl":11,"d":19.4},{"y":2008,"club":"Geelong","g":21,"gl":8,"d":20.4},{"y":2009,"club":"Geelong","g":18,"gl":2,"d":22.6},{"y":2010,"club":"Geelong","g":23,"gl":7,"d":24.3},{"y":2011,"club":"Geelong","g":24,"gl":5,"d":24.0},{"y":2012,"club":"Geelong","g":19,"gl":2,"d":24.7},{"y":2013,"club":"Geelong","g":20,"gl":10,"d":21.8},{"y":2014,"club":"Geelong","g":23,"gl":0,"d":21.2},{"y":2015,"club":"Geelong","g":17,"gl":1,"d":20.5},{"y":2016,"club":"Essendon","g":20,"gl":2,"d":25.3},{"y":2017,"club":"Essendon","g":20,"gl":0,"d":20.2}]},{"name":"Taylor Walker","pos":"FWD","first":2009,"last":2026,"clubs":["Adelaide"],"games":313,"goals":699,"answer":true,"seasons":[{"y":2009,"club":"Adelaide","g":14,"gl":23,"d":7.9},{"y":2010,"club":"Adelaide","g":18,"gl":35,"d":11.8},{"y":2011,"club":"Adelaide","g":13,"gl":32,"d":11.2},{"y":2012,"club":"Adelaide","g":19,"gl":63,"d":14.4},{"y":2013,"club":"Adelaide","g":5,"gl":10,"d":12.2},{"y":2014,"club":"Adelaide","g":15,"gl":34,"d":14.7},{"y":2015,"club":"Adelaide","g":23,"gl":59,"d":14.2},{"y":2016,"club":"Adelaide","g":23,"gl":47,"d":14.4},{"y":2017,"club":"Adelaide","g":23,"gl":54,"d":14.9},{"y":2018,"club":"Adelaide","g":14,"gl":26,"d":11.5},{"y":2019,"club":"Adelaide","g":22,"gl":43,"d":12.0},{"y":2020,"club":"Adelaide","g":14,"gl":15,"d":7.5},{"y":2021,"club":"Adelaide","g":17,"gl":48,"d":13.4},{"y":2022,"club":"Adelaide","g":18,"gl":47,"d":14.2},{"y":2023,"club":"Adelaide","g":22,"gl":76,"d":13.0},{"y":2024,"club":"Adelaide","g":18,"gl":29,"d":10.7},{"y":2025,"club":"Adelaide","g":23,"gl":39,"d":12.2},{"y":2026,"club":"Adelaide","g":12,"gl":19,"d":10.7}]},{"name":"Robert Murphy","pos":"MID/FWD","first":2000,"last":2017,"clubs":["Western Bulldogs"],"games":312,"goals":183,"answer":true,"seasons":[{"y":2000,"club":"Western Bulldogs","g":3,"gl":1,"d":6.7},{"y":2001,"club":"Western Bulldogs","g":16,"gl":2,"d":10.3},{"y":2002,"club":"Western Bulldogs","g":19,"gl":5,"d":15.3},{"y":2003,"club":"Western Bulldogs","g":22,"gl":5,"d":17.0},{"y":2004,"club":"Western Bulldogs","g":19,"gl":16,"d":15.1},{"y":2005,"club":"Western Bulldogs","g":22,"gl":33,"d":16.4},{"y":2006,"club":"Western Bulldogs","g":9,"gl":13,"d":13.2},{"y":2007,"club":"Western Bulldogs","g":17,"gl":19,"d":13.7},{"y":2008,"club":"Western Bulldogs","g":24,"gl":34,"d":17.9},{"y":2009,"club":"Western Bulldogs","g":16,"gl":10,"d":16.9},{"y":2010,"club":"Western Bulldogs","g":21,"gl":8,"d":19.2},{"y":2011,"club":"Western Bulldogs","g":21,"gl":6,"d":20.7},{"y":2012,"club":"Western Bulldogs","g":21,"gl":2,"d":20.0},{"y":2013,"club":"Western Bulldogs","g":19,"gl":13,"d":22.0},{"y":2014,"club":"Western Bulldogs","g":22,"gl":4,"d":20.5},{"y":2015,"club":"Western Bulldogs","g":21,"gl":2,"d":22.4},{"y":2016,"club":"Western Bulldogs","g":3,"gl":0,"d":28.0},{"y":2017,"club":"Western Bulldogs","g":17,"gl":10,"d":19.8}]},{"name":"Dayne Zorko","pos":"MID","first":2012,"last":2026,"clubs":["Brisbane"],"games":312,"goals":239,"answer":true,"seasons":[{"y":2012,"club":"Brisbane","g":16,"gl":16,"d":19.6},{"y":2013,"club":"Brisbane","g":22,"gl":26,"d":15.1},{"y":2014,"club":"Brisbane","g":21,"gl":18,"d":22.2},{"y":2015,"club":"Brisbane","g":22,"gl":18,"d":23.0},{"y":2016,"club":"Brisbane","g":20,"gl":23,"d":23.6},{"y":2017,"club":"Brisbane","g":21,"gl":34,"d":25.0},{"y":2018,"club":"Brisbane","g":22,"gl":26,"d":20.8},{"y":2019,"club":"Brisbane","g":24,"gl":23,"d":22.3},{"y":2020,"club":"Brisbane","g":17,"gl":9,"d":16.8},{"y":2021,"club":"Brisbane","g":23,"gl":17,"d":24.1},{"y":2022,"club":"Brisbane","g":22,"gl":6,"d":19.9},{"y":2023,"club":"Brisbane","g":20,"gl":8,"d":18.9},{"y":2024,"club":"Brisbane","g":27,"gl":9,"d":26.3},{"y":2025,"club":"Brisbane","g":27,"gl":4,"d":26.3},{"y":2026,"club":"Brisbane","g":8,"gl":2,"d":25.4}]},{"name":"Lachie Neale","pos":"MID","first":2012,"last":2026,"clubs":["Fremantle","Brisbane"],"games":311,"goals":140,"answer":true,"seasons":[{"y":2012,"club":"Fremantle","g":11,"gl":4,"d":11.3},{"y":2013,"club":"Fremantle","g":12,"gl":8,"d":19.8},{"y":2014,"club":"Fremantle","g":23,"gl":8,"d":23.5},{"y":2015,"club":"Fremantle","g":24,"gl":16,"d":27.4},{"y":2016,"club":"Fremantle","g":22,"gl":7,"d":33.5},{"y":2017,"club":"Fremantle","g":21,"gl":14,"d":27.2},{"y":2018,"club":"Fremantle","g":22,"gl":10,"d":30.3},{"y":2019,"club":"Brisbane","g":24,"gl":12,"d":30.9},{"y":2020,"club":"Brisbane","g":19,"gl":14,"d":26.9},{"y":2021,"club":"Brisbane","g":17,"gl":8,"d":27.0},{"y":2022,"club":"Brisbane","g":25,"gl":11,"d":30.0},{"y":2023,"club":"Brisbane","g":26,"gl":3,"d":26.7},{"y":2024,"club":"Brisbane","g":26,"gl":13,"d":29.3},{"y":2025,"club":"Brisbane","g":22,"gl":8,"d":26.8},{"y":2026,"club":"Brisbane","g":17,"gl":4,"d":30.6}]},{"name":"Mark Blicavs","pos":"RUCK","first":2013,"last":2026,"clubs":["Geelong"],"games":309,"goals":81,"answer":true,"seasons":[{"y":2013,"club":"Geelong","g":22,"gl":7,"d":10.9},{"y":2014,"club":"Geelong","g":23,"gl":5,"d":12.0},{"y":2015,"club":"Geelong","g":21,"gl":4,"d":18.2},{"y":2016,"club":"Geelong","g":24,"gl":7,"d":17.8},{"y":2017,"club":"Geelong","g":20,"gl":12,"d":16.2},{"y":2018,"club":"Geelong","g":23,"gl":1,"d":14.6},{"y":2019,"club":"Geelong","g":25,"gl":0,"d":13.4},{"y":2020,"club":"Geelong","g":21,"gl":3,"d":12.6},{"y":2021,"club":"Geelong","g":24,"gl":5,"d":13.8},{"y":2022,"club":"Geelong","g":24,"gl":8,"d":17.7},{"y":2023,"club":"Geelong","g":19,"gl":12,"d":15.8},{"y":2024,"club":"Geelong","g":24,"gl":5,"d":14.2},{"y":2025,"club":"Geelong","g":25,"gl":11,"d":14.2},{"y":2026,"club":"Geelong","g":14,"gl":1,"d":13.2}]},{"name":"Scott Thompson (Melbourne, 2001)","pos":"MID","first":2001,"last":2017,"clubs":["Melbourne","Adelaide"],"games":308,"goals":162,"answer":true,"seasons":[{"y":2001,"club":"Melbourne","g":9,"gl":2,"d":8.7},{"y":2002,"club":"Melbourne","g":5,"gl":2,"d":9.8},{"y":2003,"club":"Melbourne","g":13,"gl":5,"d":12.8},{"y":2004,"club":"Melbourne","g":12,"gl":8,"d":15.7},{"y":2005,"club":"Adelaide","g":24,"gl":27,"d":18.0},{"y":2006,"club":"Adelaide","g":23,"gl":22,"d":20.5},{"y":2007,"club":"Adelaide","g":23,"gl":16,"d":25.2},{"y":2008,"club":"Adelaide","g":23,"gl":16,"d":24.2},{"y":2009,"club":"Adelaide","g":23,"gl":11,"d":26.3},{"y":2010,"club":"Adelaide","g":21,"gl":12,"d":25.6},{"y":2011,"club":"Adelaide","g":22,"gl":8,"d":30.6},{"y":2012,"club":"Adelaide","g":25,"gl":10,"d":29.5},{"y":2013,"club":"Adelaide","g":22,"gl":8,"d":24.7},{"y":2014,"club":"Adelaide","g":19,"gl":3,"d":27.3},{"y":2015,"club":"Adelaide","g":21,"gl":8,"d":26.7},{"y":2016,"club":"Adelaide","g":22,"gl":4,"d":24.0},{"y":2017,"club":"Adelaide","g":1,"gl":0,"d":10.0}]},{"name":"Luke Breust","pos":"FWD","first":2011,"last":2025,"clubs":["Hawthorn"],"games":308,"goals":553,"answer":true,"seasons":[{"y":2011,"club":"Hawthorn","g":17,"gl":30,"d":12.2},{"y":2012,"club":"Hawthorn","g":24,"gl":45,"d":15.6},{"y":2013,"club":"Hawthorn","g":25,"gl":40,"d":14.6},{"y":2014,"club":"Hawthorn","g":25,"gl":57,"d":15.3},{"y":2015,"club":"Hawthorn","g":25,"gl":52,"d":14.7},{"y":2016,"club":"Hawthorn","g":24,"gl":47,"d":15.7},{"y":2017,"club":"Hawthorn","g":21,"gl":33,"d":14.3},{"y":2018,"club":"Hawthorn","g":24,"gl":54,"d":15.8},{"y":2019,"club":"Hawthorn","g":22,"gl":34,"d":13.7},{"y":2020,"club":"Hawthorn","g":13,"gl":16,"d":10.9},{"y":2021,"club":"Hawthorn","g":19,"gl":33,"d":12.6},{"y":2022,"club":"Hawthorn","g":21,"gl":40,"d":11.2},{"y":2023,"club":"Hawthorn","g":21,"gl":47,"d":10.7},{"y":2024,"club":"Hawthorn","g":19,"gl":21,"d":7.5},{"y":2025,"club":"Hawthorn","g":8,"gl":4,"d":6.8}]},{"name":"Trent Cotchin","pos":"MID","first":2008,"last":2023,"clubs":["Richmond"],"games":306,"goals":141,"answer":true,"seasons":[{"y":2008,"club":"Richmond","g":15,"gl":9,"d":16.4},{"y":2009,"club":"Richmond","g":10,"gl":3,"d":17.7},{"y":2010,"club":"Richmond","g":17,"gl":4,"d":19.5},{"y":2011,"club":"Richmond","g":22,"gl":18,"d":24.1},{"y":2012,"club":"Richmond","g":22,"gl":21,"d":27.5},{"y":2013,"club":"Richmond","g":22,"gl":6,"d":26.0},{"y":2014,"club":"Richmond","g":23,"gl":18,"d":26.0},{"y":2015,"club":"Richmond","g":22,"gl":12,"d":24.5},{"y":2016,"club":"Richmond","g":20,"gl":10,"d":26.9},{"y":2017,"club":"Richmond","g":25,"gl":17,"d":23.6},{"y":2018,"club":"Richmond","g":22,"gl":5,"d":22.0},{"y":2019,"club":"Richmond","g":14,"gl":3,"d":19.8},{"y":2020,"club":"Richmond","g":17,"gl":1,"d":18.3},{"y":2021,"club":"Richmond","g":17,"gl":2,"d":20.8},{"y":2022,"club":"Richmond","g":19,"gl":5,"d":22.7},{"y":2023,"club":"Richmond","g":19,"gl":7,"d":16.4}]},{"name":"Jimmy Bartel","pos":"MID","first":2002,"last":2016,"clubs":["Geelong"],"games":305,"goals":202,"answer":true,"seasons":[{"y":2002,"club":"Geelong","g":11,"gl":3,"d":12.7},{"y":2003,"club":"Geelong","g":13,"gl":5,"d":12.1},{"y":2004,"club":"Geelong","g":16,"gl":3,"d":21.8},{"y":2005,"club":"Geelong","g":24,"gl":18,"d":19.6},{"y":2006,"club":"Geelong","g":21,"gl":15,"d":23.0},{"y":2007,"club":"Geelong","g":23,"gl":18,"d":27.5},{"y":2008,"club":"Geelong","g":25,"gl":22,"d":28.1},{"y":2009,"club":"Geelong","g":24,"gl":12,"d":27.0},{"y":2010,"club":"Geelong","g":24,"gl":14,"d":26.2},{"y":2011,"club":"Geelong","g":24,"gl":26,"d":22.0},{"y":2012,"club":"Geelong","g":20,"gl":12,"d":21.0},{"y":2013,"club":"Geelong","g":24,"gl":16,"d":23.2},{"y":2014,"club":"Geelong","g":23,"gl":27,"d":21.9},{"y":2015,"club":"Geelong","g":11,"gl":0,"d":23.5},{"y":2016,"club":"Geelong","g":22,"gl":11,"d":21.6}]},{"name":"Mitch Duncan","pos":"MID","first":2010,"last":2025,"clubs":["Geelong"],"games":305,"goals":185,"answer":true,"seasons":[{"y":2010,"club":"Geelong","g":8,"gl":8,"d":13.6},{"y":2011,"club":"Geelong","g":21,"gl":22,"d":17.0},{"y":2012,"club":"Geelong","g":22,"gl":20,"d":18.2},{"y":2013,"club":"Geelong","g":25,"gl":14,"d":21.0},{"y":2014,"club":"Geelong","g":24,"gl":23,"d":22.8},{"y":2015,"club":"Geelong","g":11,"gl":8,"d":21.4},{"y":2016,"club":"Geelong","g":24,"gl":9,"d":22.9},{"y":2017,"club":"Geelong","g":24,"gl":15,"d":29.1},{"y":2018,"club":"Geelong","g":21,"gl":7,"d":26.3},{"y":2019,"club":"Geelong","g":23,"gl":20,"d":25.3},{"y":2020,"club":"Geelong","g":20,"gl":13,"d":20.3},{"y":2021,"club":"Geelong","g":13,"gl":8,"d":24.2},{"y":2022,"club":"Geelong","g":22,"gl":9,"d":23.4},{"y":2023,"club":"Geelong","g":16,"gl":5,"d":22.4},{"y":2024,"club":"Geelong","g":22,"gl":3,"d":18.7},{"y":2025,"club":"Geelong","g":9,"gl":1,"d":12.9}]},{"name":"Shane Edwards","pos":"MID/FWD","first":2007,"last":2022,"clubs":["Richmond"],"games":303,"goals":189,"answer":true,"seasons":[{"y":2007,"club":"Richmond","g":16,"gl":11,"d":10.3},{"y":2008,"club":"Richmond","g":16,"gl":12,"d":11.6},{"y":2009,"club":"Richmond","g":15,"gl":5,"d":12.6},{"y":2010,"club":"Richmond","g":22,"gl":7,"d":18.8},{"y":2011,"club":"Richmond","g":20,"gl":4,"d":15.7},{"y":2012,"club":"Richmond","g":20,"gl":29,"d":17.8},{"y":2013,"club":"Richmond","g":20,"gl":11,"d":18.2},{"y":2014,"club":"Richmond","g":23,"gl":22,"d":17.7},{"y":2015,"club":"Richmond","g":16,"gl":13,"d":18.8},{"y":2016,"club":"Richmond","g":19,"gl":15,"d":18.7},{"y":2017,"club":"Richmond","g":20,"gl":11,"d":17.6},{"y":2018,"club":"Richmond","g":24,"gl":14,"d":19.2},{"y":2019,"club":"Richmond","g":24,"gl":7,"d":21.9},{"y":2020,"club":"Richmond","g":10,"gl":5,"d":17.2},{"y":2021,"club":"Richmond","g":16,"gl":8,"d":18.4},{"y":2022,"club":"Richmond","g":22,"gl":15,"d":13.2}]},{"name":"Nathan Jones","pos":"MID","first":2006,"last":2021,"clubs":["Melbourne"],"games":302,"goals":141,"answer":true,"seasons":[{"y":2006,"club":"Melbourne","g":8,"gl":2,"d":13.9},{"y":2007,"club":"Melbourne","g":21,"gl":10,"d":17.4},{"y":2008,"club":"Melbourne","g":21,"gl":9,"d":20.6},{"y":2009,"club":"Melbourne","g":20,"gl":8,"d":22.1},{"y":2010,"club":"Melbourne","g":22,"gl":9,"d":19.3},{"y":2011,"club":"Melbourne","g":22,"gl":14,"d":23.0},{"y":2012,"club":"Melbourne","g":21,"gl":16,"d":24.6},{"y":2013,"club":"Melbourne","g":22,"gl":8,"d":23.1},{"y":2014,"club":"Melbourne","g":22,"gl":7,"d":27.7},{"y":2015,"club":"Melbourne","g":22,"gl":12,"d":23.8},{"y":2016,"club":"Melbourne","g":22,"gl":10,"d":28.0},{"y":2017,"club":"Melbourne","g":16,"gl":10,"d":27.4},{"y":2018,"club":"Melbourne","g":25,"gl":15,"d":24.6},{"y":2019,"club":"Melbourne","g":22,"gl":8,"d":20.5},{"y":2020,"club":"Melbourne","g":8,"gl":1,"d":13.0},{"y":2021,"club":"Melbourne","g":8,"gl":2,"d":11.9}]},{"name":"Dustin Martin","pos":"MID","first":2010,"last":2024,"clubs":["Richmond"],"games":302,"goals":338,"answer":true,"seasons":[{"y":2010,"club":"Richmond","g":21,"gl":11,"d":20.2},{"y":2011,"club":"Richmond","g":22,"gl":33,"d":22.1},{"y":2012,"club":"Richmond","g":20,"gl":23,"d":22.4},{"y":2013,"club":"Richmond","g":23,"gl":23,"d":24.2},{"y":2014,"club":"Richmond","g":22,"gl":27,"d":25.5},{"y":2015,"club":"Richmond","g":23,"gl":24,"d":26.0},{"y":2016,"club":"Richmond","g":22,"gl":9,"d":31.1},{"y":2017,"club":"Richmond","g":25,"gl":37,"d":29.8},{"y":2018,"club":"Richmond","g":23,"gl":31,"d":25.3},{"y":2019,"club":"Richmond","g":23,"gl":32,"d":26.1},{"y":2020,"club":"Richmond","g":20,"gl":22,"d":20.6},{"y":2021,"club":"Richmond","g":16,"gl":19,"d":22.6},{"y":2022,"club":"Richmond","g":9,"gl":12,"d":18.3},{"y":2023,"club":"Richmond","g":20,"gl":25,"d":23.6},{"y":2024,"club":"Richmond","g":13,"gl":10,"d":17.4}]},{"name":"Kane Cornes","pos":"MID","first":2001,"last":2015,"clubs":["Port Adelaide"],"games":300,"goals":93,"answer":true,"seasons":[{"y":2001,"club":"Port Adelaide","g":7,"gl":1,"d":11.6},{"y":2002,"club":"Port Adelaide","g":15,"gl":3,"d":12.7},{"y":2003,"club":"Port Adelaide","g":22,"gl":12,"d":12.8},{"y":2004,"club":"Port Adelaide","g":25,"gl":12,"d":20.0},{"y":2005,"club":"Port Adelaide","g":24,"gl":18,"d":24.6},{"y":2006,"club":"Port Adelaide","g":22,"gl":7,"d":27.1},{"y":2007,"club":"Port Adelaide","g":25,"gl":11,"d":27.8},{"y":2008,"club":"Port Adelaide","g":22,"gl":5,"d":27.9},{"y":2009,"club":"Port Adelaide","g":22,"gl":7,"d":27.1},{"y":2010,"club":"Port Adelaide","g":22,"gl":4,"d":27.5},{"y":2011,"club":"Port Adelaide","g":17,"gl":1,"d":22.0},{"y":2012,"club":"Port Adelaide","g":22,"gl":5,"d":25.5},{"y":2013,"club":"Port Adelaide","g":23,"gl":5,"d":27.4},{"y":2014,"club":"Port Adelaide","g":25,"gl":1,"d":24.3},{"y":2015,"club":"Port Adelaide","g":7,"gl":1,"d":20.0}]},{"name":"Marc Murphy","pos":"MID","first":2006,"last":2021,"clubs":["Carlton"],"games":300,"goals":197,"answer":true,"seasons":[{"y":2006,"club":"Carlton","g":13,"gl":8,"d":18.0},{"y":2007,"club":"Carlton","g":22,"gl":10,"d":17.9},{"y":2008,"club":"Carlton","g":22,"gl":14,"d":24.6},{"y":2009,"club":"Carlton","g":23,"gl":31,"d":25.6},{"y":2010,"club":"Carlton","g":22,"gl":19,"d":25.5},{"y":2011,"club":"Carlton","g":24,"gl":22,"d":29.1},{"y":2012,"club":"Carlton","g":16,"gl":11,"d":26.2},{"y":2013,"club":"Carlton","g":23,"gl":18,"d":22.3},{"y":2014,"club":"Carlton","g":20,"gl":10,"d":24.1},{"y":2015,"club":"Carlton","g":19,"gl":7,"d":26.8},{"y":2016,"club":"Carlton","g":10,"gl":7,"d":20.5},{"y":2017,"club":"Carlton","g":22,"gl":11,"d":29.8},{"y":2018,"club":"Carlton","g":13,"gl":5,"d":26.0},{"y":2019,"club":"Carlton","g":19,"gl":12,"d":25.4},{"y":2020,"club":"Carlton","g":17,"gl":4,"d":18.4},{"y":2021,"club":"Carlton","g":15,"gl":8,"d":12.7}]},{"name":"Jeremy Cameron","pos":"FWD","first":2012,"last":2026,"clubs":["GWS","Geelong"],"games":296,"goals":775,"answer":true,"seasons":[{"y":2012,"club":"GWS","g":16,"gl":29,"d":10.0},{"y":2013,"club":"GWS","g":21,"gl":62,"d":10.7},{"y":2014,"club":"GWS","g":14,"gl":29,"d":9.5},{"y":2015,"club":"GWS","g":22,"gl":63,"d":10.7},{"y":2016,"club":"GWS","g":20,"gl":53,"d":11.2},{"y":2017,"club":"GWS","g":19,"gl":45,"d":15.8},{"y":2018,"club":"GWS","g":18,"gl":46,"d":15.2},{"y":2019,"club":"GWS","g":24,"gl":76,"d":16.0},{"y":2020,"club":"GWS","g":17,"gl":24,"d":10.4},{"y":2021,"club":"Geelong","g":15,"gl":39,"d":11.7},{"y":2022,"club":"Geelong","g":24,"gl":65,"d":16.2},{"y":2023,"club":"Geelong","g":20,"gl":53,"d":16.1},{"y":2024,"club":"Geelong","g":24,"gl":64,"d":16.3},{"y":2025,"club":"Geelong","g":26,"gl":88,"d":13.5},{"y":2026,"club":"Geelong","g":16,"gl":39,"d":14.2}]},{"name":"Jack Gunston","pos":"FWD","first":2010,"last":2026,"clubs":["Adelaide","Hawthorn","Brisbane"],"games":294,"goals":593,"answer":true,"seasons":[{"y":2010,"club":"Adelaide","g":2,"gl":1,"d":8.0},{"y":2011,"club":"Adelaide","g":12,"gl":19,"d":10.8},{"y":2012,"club":"Hawthorn","g":19,"gl":39,"d":11.9},{"y":2013,"club":"Hawthorn","g":23,"gl":46,"d":15.4},{"y":2014,"club":"Hawthorn","g":23,"gl":58,"d":16.1},{"y":2015,"club":"Hawthorn","g":24,"gl":57,"d":16.5},{"y":2016,"club":"Hawthorn","g":24,"gl":51,"d":16.0},{"y":2017,"club":"Hawthorn","g":22,"gl":19,"d":18.9},{"y":2018,"club":"Hawthorn","g":23,"gl":51,"d":17.8},{"y":2019,"club":"Hawthorn","g":20,"gl":26,"d":15.5},{"y":2020,"club":"Hawthorn","g":16,"gl":31,"d":11.2},{"y":2021,"club":"Hawthorn","g":1,"gl":0,"d":7.0},{"y":2022,"club":"Hawthorn","g":16,"gl":32,"d":10.8},{"y":2023,"club":"Brisbane","g":17,"gl":22,"d":10.0},{"y":2024,"club":"Hawthorn","g":18,"gl":29,"d":8.8},{"y":2025,"club":"Hawthorn","g":23,"gl":73,"d":12.6},{"y":2026,"club":"Hawthorn","g":11,"gl":39,"d":11.5}]},{"name":"Bradley Hill","pos":"MID","first":2012,"last":2026,"clubs":["Hawthorn","Fremantle","St Kilda"],"games":294,"goals":118,"answer":true,"seasons":[{"y":2012,"club":"Hawthorn","g":5,"gl":3,"d":10.0},{"y":2013,"club":"Hawthorn","g":24,"gl":18,"d":16.1},{"y":2014,"club":"Hawthorn","g":22,"gl":10,"d":20.4},{"y":2015,"club":"Hawthorn","g":24,"gl":16,"d":19.9},{"y":2016,"club":"Hawthorn","g":20,"gl":11,"d":17.4},{"y":2017,"club":"Fremantle","g":22,"gl":13,"d":23.5},{"y":2018,"club":"Fremantle","g":10,"gl":2,"d":20.7},{"y":2019,"club":"Fremantle","g":22,"gl":6,"d":25.1},{"y":2020,"club":"St Kilda","g":19,"gl":2,"d":15.4},{"y":2021,"club":"St Kilda","g":22,"gl":3,"d":19.7},{"y":2022,"club":"St Kilda","g":21,"gl":6,"d":21.0},{"y":2023,"club":"St Kilda","g":22,"gl":6,"d":20.7},{"y":2024,"club":"St Kilda","g":22,"gl":7,"d":19.4},{"y":2025,"club":"St Kilda","g":22,"gl":6,"d":19.6},{"y":2026,"club":"St Kilda","g":17,"gl":9,"d":25.3}]},{"name":"Steve Johnson","pos":"MID/FWD","first":2002,"last":2017,"clubs":["Geelong","GWS"],"games":293,"goals":516,"answer":true,"seasons":[{"y":2002,"club":"Geelong","g":12,"gl":16,"d":12.6},{"y":2003,"club":"Geelong","g":15,"gl":23,"d":11.4},{"y":2004,"club":"Geelong","g":13,"gl":21,"d":15.2},{"y":2005,"club":"Geelong","g":12,"gl":18,"d":15.0},{"y":2006,"club":"Geelong","g":15,"gl":30,"d":13.3},{"y":2007,"club":"Geelong","g":20,"gl":49,"d":18.6},{"y":2008,"club":"Geelong","g":25,"gl":53,"d":20.3},{"y":2009,"club":"Geelong","g":18,"gl":40,"d":19.9},{"y":2010,"club":"Geelong","g":22,"gl":63,"d":18.6},{"y":2011,"club":"Geelong","g":23,"gl":50,"d":22.3},{"y":2012,"club":"Geelong","g":21,"gl":19,"d":22.1},{"y":2013,"club":"Geelong","g":19,"gl":23,"d":28.7},{"y":2014,"club":"Geelong","g":18,"gl":17,"d":25.8},{"y":2015,"club":"Geelong","g":20,"gl":30,"d":20.6},{"y":2016,"club":"GWS","g":22,"gl":43,"d":18.5},{"y":2017,"club":"GWS","g":18,"gl":21,"d":15.2}]},{"name":"Josh Kennedy (Carlton, 2006)","pos":"FWD","first":2006,"last":2022,"clubs":["Carlton","West Coast"],"games":293,"goals":723,"answer":true,"seasons":[{"y":2006,"club":"Carlton","g":9,"gl":5,"d":5.8},{"y":2007,"club":"Carlton","g":13,"gl":6,"d":7.5},{"y":2008,"club":"West Coast","g":7,"gl":7,"d":12.7},{"y":2009,"club":"West Coast","g":16,"gl":31,"d":12.6},{"y":2010,"club":"West Coast","g":22,"gl":41,"d":11.8},{"y":2011,"club":"West Coast","g":23,"gl":59,"d":11.7},{"y":2012,"club":"West Coast","g":9,"gl":18,"d":8.2},{"y":2013,"club":"West Coast","g":21,"gl":60,"d":13.0},{"y":2014,"club":"West Coast","g":20,"gl":61,"d":11.3},{"y":2015,"club":"West Coast","g":25,"gl":80,"d":13.3},{"y":2016,"club":"West Coast","g":23,"gl":82,"d":13.0},{"y":2017,"club":"West Coast","g":19,"gl":69,"d":11.8},{"y":2018,"club":"West Coast","g":14,"gl":43,"d":11.1},{"y":2019,"club":"West Coast","g":22,"gl":49,"d":8.3},{"y":2020,"club":"West Coast","g":17,"gl":34,"d":7.0},{"y":2021,"club":"West Coast","g":18,"gl":41,"d":9.9},{"y":2022,"club":"West Coast","g":15,"gl":37,"d":8.9}]},{"name":"Matthew Boyd","pos":"MID","first":2003,"last":2017,"clubs":["Western Bulldogs"],"games":292,"goals":86,"answer":true,"seasons":[{"y":2003,"club":"Western Bulldogs","g":8,"gl":3,"d":7.1},{"y":2004,"club":"Western Bulldogs","g":19,"gl":1,"d":13.4},{"y":2005,"club":"Western Bulldogs","g":17,"gl":5,"d":13.5},{"y":2006,"club":"Western Bulldogs","g":24,"gl":9,"d":19.9},{"y":2007,"club":"Western Bulldogs","g":22,"gl":11,"d":24.8},{"y":2008,"club":"Western Bulldogs","g":25,"gl":5,"d":25.2},{"y":2009,"club":"Western Bulldogs","g":25,"gl":15,"d":28.9},{"y":2010,"club":"Western Bulldogs","g":23,"gl":8,"d":30.3},{"y":2011,"club":"Western Bulldogs","g":22,"gl":8,"d":31.9},{"y":2012,"club":"Western Bulldogs","g":22,"gl":6,"d":32.8},{"y":2013,"club":"Western Bulldogs","g":13,"gl":4,"d":29.4},{"y":2014,"club":"Western Bulldogs","g":19,"gl":7,"d":26.2},{"y":2015,"club":"Western Bulldogs","g":19,"gl":1,"d":27.2},{"y":2016,"club":"Western Bulldogs","g":24,"gl":0,"d":27.2},{"y":2017,"club":"Western Bulldogs","g":10,"gl":3,"d":23.0}]},{"name":"Simon Black","pos":"MID","first":2000,"last":2013,"clubs":["Brisbane"],"games":291,"goals":150,"answer":true,"seasons":[{"y":2000,"club":"Brisbane","g":19,"gl":16,"d":23.9},{"y":2001,"club":"Brisbane","g":25,"gl":23,"d":24.9},{"y":2002,"club":"Brisbane","g":25,"gl":17,"d":23.3},{"y":2003,"club":"Brisbane","g":26,"gl":16,"d":24.4},{"y":2004,"club":"Brisbane","g":25,"gl":13,"d":23.6},{"y":2005,"club":"Brisbane","g":18,"gl":10,"d":22.0},{"y":2006,"club":"Brisbane","g":22,"gl":8,"d":24.1},{"y":2007,"club":"Brisbane","g":21,"gl":9,"d":22.2},{"y":2008,"club":"Brisbane","g":21,"gl":10,"d":25.7},{"y":2009,"club":"Brisbane","g":23,"gl":10,"d":25.4},{"y":2010,"club":"Brisbane","g":18,"gl":6,"d":25.6},{"y":2011,"club":"Brisbane","g":22,"gl":4,"d":26.8},{"y":2012,"club":"Brisbane","g":18,"gl":5,"d":23.7},{"y":2013,"club":"Brisbane","g":8,"gl":3,"d":22.4}]},{"name":"Jack Crisp","pos":"MID","first":2012,"last":2026,"clubs":["Brisbane","Collingwood"],"games":291,"goals":101,"answer":true,"seasons":[{"y":2012,"club":"Brisbane","g":10,"gl":3,"d":11.4},{"y":2013,"club":"Brisbane","g":2,"gl":1,"d":7.5},{"y":2014,"club":"Brisbane","g":6,"gl":6,"d":18.8},{"y":2015,"club":"Collingwood","g":22,"gl":16,"d":22.0},{"y":2016,"club":"Collingwood","g":22,"gl":9,"d":20.2},{"y":2017,"club":"Collingwood","g":22,"gl":6,"d":21.5},{"y":2018,"club":"Collingwood","g":26,"gl":4,"d":23.1},{"y":2019,"club":"Collingwood","g":24,"gl":2,"d":25.6},{"y":2020,"club":"Collingwood","g":19,"gl":2,"d":19.1},{"y":2021,"club":"Collingwood","g":22,"gl":2,"d":27.0},{"y":2022,"club":"Collingwood","g":25,"gl":12,"d":23.8},{"y":2023,"club":"Collingwood","g":26,"gl":10,"d":21.3},{"y":2024,"club":"Collingwood","g":23,"gl":14,"d":20.3},{"y":2025,"club":"Collingwood","g":25,"gl":9,"d":20.0},{"y":2026,"club":"Collingwood","g":17,"gl":5,"d":21.8}]},{"name":"Dean Cox","pos":"RUCK","first":2001,"last":2014,"clubs":["West Coast"],"games":290,"goals":169,"answer":true,"seasons":[{"y":2001,"club":"West Coast","g":17,"gl":2,"d":7.7},{"y":2002,"club":"West Coast","g":19,"gl":7,"d":10.2},{"y":2003,"club":"West Coast","g":19,"gl":10,"d":11.2},{"y":2004,"club":"West Coast","g":23,"gl":5,"d":13.7},{"y":2005,"club":"West Coast","g":25,"gl":22,"d":16.4},{"y":2006,"club":"West Coast","g":21,"gl":14,"d":18.0},{"y":2007,"club":"West Coast","g":21,"gl":13,"d":18.9},{"y":2008,"club":"West Coast","g":22,"gl":9,"d":22.1},{"y":2009,"club":"West Coast","g":13,"gl":8,"d":21.8},{"y":2010,"club":"West Coast","g":22,"gl":10,"d":16.9},{"y":2011,"club":"West Coast","g":25,"gl":20,"d":17.8},{"y":2012,"club":"West Coast","g":24,"gl":28,"d":16.0},{"y":2013,"club":"West Coast","g":22,"gl":13,"d":15.9},{"y":2014,"club":"West Coast","g":17,"gl":8,"d":14.4}]},{"name":"Josh Kennedy (Hawthorn, 2008)","pos":"MID","first":2008,"last":2022,"clubs":["Hawthorn","Sydney"],"games":290,"goals":157,"answer":true,"seasons":[{"y":2008,"club":"Hawthorn","g":3,"gl":0,"d":13.7},{"y":2009,"club":"Hawthorn","g":10,"gl":4,"d":19.4},{"y":2010,"club":"Sydney","g":24,"gl":10,"d":20.1},{"y":2011,"club":"Sydney","g":24,"gl":10,"d":22.0},{"y":2012,"club":"Sydney","g":25,"gl":29,"d":28.3},{"y":2013,"club":"Sydney","g":25,"gl":14,"d":27.1},{"y":2014,"club":"Sydney","g":23,"gl":13,"d":28.6},{"y":2015,"club":"Sydney","g":24,"gl":15,"d":30.5},{"y":2016,"club":"Sydney","g":25,"gl":20,"d":31.5},{"y":2017,"club":"Sydney","g":21,"gl":16,"d":28.2},{"y":2018,"club":"Sydney","g":23,"gl":10,"d":25.4},{"y":2019,"club":"Sydney","g":19,"gl":7,"d":26.5},{"y":2020,"club":"Sydney","g":12,"gl":3,"d":20.7},{"y":2021,"club":"Sydney","g":21,"gl":4,"d":24.0},{"y":2022,"club":"Sydney","g":11,"gl":2,"d":12.1}]},{"name":"Liam Shiels","pos":"MID","first":2009,"last":2024,"clubs":["Hawthorn","North Melbourne"],"games":288,"goals":97,"answer":true,"seasons":[{"y":2009,"club":"Hawthorn","g":11,"gl":1,"d":13.6},{"y":2010,"club":"Hawthorn","g":6,"gl":0,"d":10.7},{"y":2011,"club":"Hawthorn","g":25,"gl":11,"d":22.6},{"y":2012,"club":"Hawthorn","g":22,"gl":7,"d":19.1},{"y":2013,"club":"Hawthorn","g":17,"gl":3,"d":15.3},{"y":2014,"club":"Hawthorn","g":21,"gl":8,"d":22.7},{"y":2015,"club":"Hawthorn","g":22,"gl":13,"d":21.7},{"y":2016,"club":"Hawthorn","g":18,"gl":4,"d":17.5},{"y":2017,"club":"Hawthorn","g":21,"gl":9,"d":21.7},{"y":2018,"club":"Hawthorn","g":23,"gl":9,"d":23.1},{"y":2019,"club":"Hawthorn","g":19,"gl":10,"d":23.2},{"y":2020,"club":"Hawthorn","g":16,"gl":6,"d":17.9},{"y":2021,"club":"Hawthorn","g":21,"gl":5,"d":21.1},{"y":2022,"club":"Hawthorn","g":13,"gl":4,"d":11.2},{"y":2023,"club":"North Melbourne","g":16,"gl":3,"d":17.7},{"y":2024,"club":"North Melbourne","g":17,"gl":4,"d":11.9}]},{"name":"Zach Tuohy","pos":"MID","first":2011,"last":2024,"clubs":["Carlton","Geelong"],"games":288,"goals":101,"answer":true,"seasons":[{"y":2011,"club":"Carlton","g":11,"gl":3,"d":12.5},{"y":2012,"club":"Carlton","g":19,"gl":5,"d":10.9},{"y":2013,"club":"Carlton","g":24,"gl":13,"d":12.7},{"y":2014,"club":"Carlton","g":22,"gl":4,"d":14.0},{"y":2015,"club":"Carlton","g":22,"gl":9,"d":18.8},{"y":2016,"club":"Carlton","g":22,"gl":6,"d":20.1},{"y":2017,"club":"Geelong","g":25,"gl":6,"d":24.6},{"y":2018,"club":"Geelong","g":23,"gl":10,"d":21.9},{"y":2019,"club":"Geelong","g":18,"gl":3,"d":19.4},{"y":2020,"club":"Geelong","g":19,"gl":8,"d":16.6},{"y":2021,"club":"Geelong","g":21,"gl":11,"d":22.9},{"y":2022,"club":"Geelong","g":24,"gl":9,"d":21.7},{"y":2023,"club":"Geelong","g":20,"gl":6,"d":18.1},{"y":2024,"club":"Geelong","g":18,"gl":8,"d":15.6}]}];
+
+let POOL = [];      // everything guessable (autocomplete + clue chips)
+let ANSWERS = [];   // subset that can be the mystery player
+let USING_FALLBACK = false;
+
+async function loadData(){
+  let data = null;
+  try{
+    const r = await fetch('players.json', {cache:'no-store'});
+    if (r.ok) data = await r.json();
+  }catch(e){}
+  if (!data || !data.length){ data = FALLBACK; USING_FALLBACK = true; }
+  POOL = data;
+  ANSWERS = data.filter(p => p.answer && p.seasons && p.seasons.length);
+}
+function careerBlurb(p){ return p.games+' games · '+p.goals+' goals · '+p.first+'–'+p.last; }
+
+/* ===================== game state & persistence ===================== */
+const NORMAL_GUESSES = 8, HARD_GUESSES = 5;
+const EPOCH = new Date(2026, 6, 1); // daily #1 = 1 Jul 2026
+
+let mem = {}; // in-memory fallback
+async function sGet(k){ try{ const r = await window.storage.get(k); return r ? JSON.parse(r.value) : null; }catch(e){ return mem[k] ?? null; } }
+async function sSet(k,v){ mem[k]=v; try{ await window.storage.set(k, JSON.stringify(v)); }catch(e){} }
+
+let settings = { hard:false, light:false };
+let stats = { played:0, wins:0, streak:0, maxStreak:0, dist:{}, lastDailyWon:null };
+let G = null; // current game
+
+function dailyIndex(){
+  const now = new Date();
+  const days = Math.floor((new Date(now.getFullYear(),now.getMonth(),now.getDate()) - EPOCH)/86400000);
+  return Math.max(0, days);
+}
+function dailyPlayerIdx(n){
+  // simple deterministic scramble so consecutive days aren't alphabetical
+  let x = (n * 2654435761) % 4294967296;
+  x = ((x >>> 13) ^ x) >>> 0;
+  return x % ANSWERS.length;
+}
+// seeded PRNG (xorshift32) so a day's reveal order is the same for everyone
+function seededRng(seed){
+  let x = (seed >>> 0) || 1;
+  return function(){
+    x ^= x << 13; x >>>= 0;
+    x ^= x >>> 17;
+    x ^= x << 5;  x >>>= 0;
+    return x / 4294967296;
+  };
+}
+// Fisher–Yates shuffle of [0..n-1] using rand() (defaults to Math.random)
+function shuffledOrder(n, rand){
+  rand = rand || Math.random;
+  const a = Array.from({length:n}, (_,i)=>i);
+  for (let i=n-1;i>0;i--){ const j = Math.floor(rand()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; }
+  return a;
+}
+function todayKey(){ return "daily-" + dailyIndex(); }
+
+function newGame(mode){
+  const hard = settings.hard;
+  let idx;
+  if (mode === "daily") idx = dailyPlayerIdx(dailyIndex());
+  else {
+    idx = Math.floor(Math.random()*ANSWERS.length);
+    if (G && ANSWERS[idx].name === G.player.name) idx = (idx+1) % ANSWERS.length;
+  }
+  // random order in which seasons are unmasked; seeded per-day so every
+  // daily player sees the same sequence, freshly random in practice
+  const nSeasons = ANSWERS[idx].seasons.length;
+  const rand = mode === "daily" ? seededRng((dailyIndex() * 2654435761) >>> 0 ^ 0x9e3779b9) : Math.random;
+  const revealOrder = shuffledOrder(nSeasons, rand);
+  return {
+    mode, hard, player: ANSWERS[idx],
+    maxGuesses: hard ? HARD_GUESSES : NORMAL_GUESSES,
+    guesses: [], revealed: 1, over:false, won:false, revealOrder
+  };
+}
+
+/* ===================== rendering ===================== */
+const $ = id => document.getElementById(id);
+const tbody = $("tbody"), chipsEl = $("chips"), guessList = $("guessList");
+
+function clubCell(club, hard, hardIdx){
+  if (hard) return '<span class="clubdot" style="background:var(--line)"></span>Club ' + String.fromCharCode(65+hardIdx);
+  const c = CLUB_COLOURS[club] || "#666";
+  return '<span class="clubdot" style="background:'+c+'"></span><span title="'+club+'">' + clubAbbr(club) + '</span>';
+}
+function render(){
+  const p = G.player, seasons = p.seasons;
+  // hard mode: stable club letters in order of first appearance
+  const clubOrder = [];
+  seasons.forEach(s => { if(!clubOrder.includes(s.club)) clubOrder.push(s.club); });
+
+  let rows = "";
+  const shown = Math.min(G.revealed, seasons.length);
+  const order = G.revealOrder || Array.from({length:seasons.length}, (_,i)=>i);
+  const allShown = shown >= seasons.length;
+  // Revealed seasons fill from the top in the (random) order they were revealed,
+  // so the first season revealed is always the first row. Once every season is
+  // out, settle into chronological order for a clean full-career read.
+  const shownIdx = allShown ? seasons.map((_,i)=>i) : order.slice(0, shown);
+  for (let r=0;r<seasons.length;r++){
+    if (r < shownIdx.length){
+      const s = seasons[shownIdx[r]];
+      const num = v => (v == null ? "–" : v.toFixed(1));
+      rows += '<tr class="season"><td>'+s.y+'</td><td>'+clubCell(s.club,G.hard,clubOrder.indexOf(s.club))+
+              '</td><td>'+s.g+'</td><td>'+s.gl+'</td><td>'+(s.b ?? "–")+'</td><td>'+num(s.d)+
+              '</td><td>'+num(s.m)+'</td><td>'+(s.h ?? "–")+'</td></tr>';
+    } else {
+      rows += '<tr class="masked"><td>··</td><td>––––</td><td>··</td><td>··</td><td>··</td><td>··</td><td>··</td><td>··</td></tr>';
+    }
+  }
+  // bonus clue rows (normal mode only), unlocked after all seasons shown
+  if (!G.hard){
+    const extra = G.revealed - seasons.length;
+    if (extra >= 1) rows += '<tr class="season bonus"><td colspan="8">POSITION: '+p.pos+'</td></tr>';
+    if (extra >= 2) rows += '<tr class="season bonus"><td colspan="8">CAREER: '+p.games+' games · '+p.goals+' goals</td></tr>';
+  }
+  tbody.innerHTML = rows;
+
+  const nClubs = (p.clubs || []).length;
+  $("metaLeft").textContent = "CAREER RECORD · " + seasons.length + " SEASONS · " +
+    nClubs + (nClubs === 1 ? " CLUB" : " CLUBS");
+  $("metaRight").innerHTML = G.hard ? '<b>HARD</b>' : (G.mode==="daily" ? 'DAILY <b>#'+(dailyIndex()+1)+'</b>' : 'PRACTICE');
+  const left = G.maxGuesses - G.guesses.length;
+  $("remain").innerHTML = G.over ? (G.won ? 'Got it. Come back tomorrow.' : 'Better luck tomorrow.')
+    : 'Guess <b>'+(G.guesses.length+1)+'</b> of <b>'+G.maxGuesses+'</b>';
+  $("guessInput").disabled = G.over;
+  $("btnGo").disabled = G.over || !$("guessInput").value.trim();
+
+  // guess history
+  guessList.innerHTML = G.guesses.map((g,i) => {
+    if (g.skip) return '<div class="guessrow skip"><span>Season revealed</span><span class="n">clue '+(i+1)+'</span></div>';
+    return '<div class="guessrow '+(g.correct?'right':'wrong')+'"><span>'+g.name+'</span><span class="n">'+(g.correct?'✔':'✘ '+(i+1))+'</span></div>';
+  }).join("");
+
+  // aux buttons
+  const maxReveal = seasons.length + (G.hard ? 0 : 2);
+  $("btnClue").disabled = G.over || G.revealed >= maxReveal || (G.guesses.length >= G.maxGuesses - 1);
+  $("btnGiveUp").disabled = G.over;
+}
+
+function renderChips(guessed){
+  if (G.hard){ chipsEl.innerHTML=""; return; }
+  const a = G.player;
+  const aClubs = new Set(a.seasons.map(s=>s.club));
+  const shared = guessed.clubs.some(c => aClubs.has(c));
+  const samePos = guessed.pos === a.pos;
+  const aDebut = a.seasons[0].y;
+  const dir = aDebut === guessed.first ? "same year" :
+              (aDebut > guessed.first ? "debuted later ↓" : "debuted earlier ↑");
+  chipsEl.innerHTML =
+    '<span class="chip '+(shared?'yes':'no')+'">'+(shared?'✔':'✘')+' shared club</span>' +
+    '<span class="chip '+(samePos?'yes':'no')+'">'+(samePos?'✔':'✘')+' position</span>' +
+    '<span class="chip">vs your guess: '+dir+'</span>';
+}
+
+/* ===================== guessing ===================== */
+const input = $("guessInput"), ac = $("ac");
+let acItems = [], acHl = -1;
+
+function norm(s){ return s.toLowerCase().normalize("NFD").replace(/[^a-z ]/g,""); }
+function filterPlayers(q){
+  q = norm(q);
+  if (!q) return [];
+  const guessedNames = new Set(G.guesses.filter(g=>!g.skip).map(g=>g.name));
+  return POOL.filter(p => !guessedNames.has(p.name) && norm(p.name).includes(q)).slice(0,6);
+}
+function openAc(list){
+  acItems = list; acHl = -1;
+  if (!list.length){ ac.classList.remove("open"); ac.innerHTML=""; return; }
+  ac.innerHTML = list.map((p,i) =>
+    '<button class="acitem" data-i="'+i+'">'+p.name+'<small>'+p.first+'–'+p.last+'</small></button>'
+  ).join("");
+  ac.classList.add("open");
+}
+input.addEventListener("input", () => { openAc(filterPlayers(input.value)); $("btnGo").disabled = G.over || !input.value.trim(); });
+input.addEventListener("keydown", e => {
+  if (e.key === "ArrowDown" || e.key === "ArrowUp"){
+    e.preventDefault();
+    if (!acItems.length) return;
+    acHl = (acHl + (e.key==="ArrowDown"?1:-1) + acItems.length) % acItems.length;
+    [...ac.children].forEach((el,i)=>el.classList.toggle("hl", i===acHl));
+  } else if (e.key === "Enter"){
+    if (acHl >= 0) pickPlayer(acItems[acHl]); else submitGuess();
+  }
+});
+ac.addEventListener("click", e => {
+  const b = e.target.closest(".acitem");
+  if (b) pickPlayer(acItems[+b.dataset.i]);
+});
+function pickPlayer(p){ input.value = p.name; ac.classList.remove("open"); submitGuess(); }
+$("btnGo").addEventListener("click", submitGuess);
+document.addEventListener("click", e => { if (!e.target.closest(".guessbar")) ac.classList.remove("open"); });
+
+async function submitGuess(){
+  if (G.over) return;
+  const q = norm(input.value.trim());
+  const p = POOL.find(pl => norm(pl.name) === q) || filterPlayers(input.value)[0];
+  if (!p){ toast("Pick a player from the list"); return; }
+  if (G.guesses.some(g => !g.skip && g.name === p.name)){ toast("Already guessed"); return; }
+
+  const correct = p.name === G.player.name;
+  G.guesses.push({name:p.name, correct});
+  input.value = ""; ac.classList.remove("open");
+
+  if (correct){
+    G.over = true; G.won = true;
+    await finishGame();
+  } else {
+    renderChips(p);
+    G.revealed++;
+    if (G.guesses.length >= G.maxGuesses){ G.over = true; G.won = false; G.revealed = 999; await finishGame(); }
+  }
+  render();
+}
+
+$("btnClue").addEventListener("click", async () => {
+  if (G.over) return;
+  G.guesses.push({name:"Season revealed", skip:true});
+  G.revealed++;
+  chipsEl.innerHTML = "";
+  if (G.guesses.length >= G.maxGuesses){ G.over = true; G.won = false; G.revealed = 999; await finishGame(); }
+  render();
+});
+$("btnGiveUp").addEventListener("click", async () => {
+  if (G.over) return;
+  G.over = true; G.won = false;
+  await finishGame();
+  render();
+});
+
+async function finishGame(){
+  G.revealed = 999; // open the whole table
+  if (G.mode === "daily"){
+    const already = await sGet(todayKey());
+    if (!already){
+      stats.played++;
+      if (G.won){
+        stats.wins++; stats.streak++; stats.maxStreak = Math.max(stats.maxStreak, stats.streak);
+        stats.dist[G.guesses.length] = (stats.dist[G.guesses.length]||0)+1;
+      } else stats.streak = 0;
+      await sSet("stats", stats);
+      await sSet(todayKey(), {won:G.won, n:G.guesses.length, hard:G.hard, guesses:G.guesses});
+    }
+  }
+  setTimeout(showResult, 650);
+}
+
+function showResult(){
+  const p = G.player;
+  $("resTag").textContent = G.mode==="daily" ? "JOURNEYMAN FOOTY #"+(dailyIndex()+1) : "PRACTICE";
+  $("resWho").textContent = p.name;
+  $("resCareer").textContent = p.pos+" · "+careerBlurb(p);
+  $("resVerdict").textContent = G.won
+    ? ["Seer.","Freakish.","Too easy.","Solid read.","Got there.","Scraped in."][Math.min(G.guesses.length-1,5)] + " " + G.guesses.length + "/" + G.maxGuesses
+    : "Not this time.";
+  $("shareFallback").style.display = "none";
+  $("ovResult").classList.add("open");
+}
+
+function shareUrl(){
+  const u = SITE_URL || (location.origin && location.origin !== "null" ? location.origin : "");
+  return u.replace(/\/+$/, "");
+}
+function shareText(){
+  const n = G.won ? G.guesses.length : "X";
+  const grid = G.guesses.map(g => g.skip ? "⬜" : (g.correct ? "🟩" : "🟥")).join("");
+  const tag = G.mode==="daily" ? "#"+(dailyIndex()+1) : "practice";
+  const url = shareUrl();
+  return "Journeyman Footy "+tag+" "+n+"/"+G.maxGuesses+(G.hard?" (hard)":"")+"\n"+grid+
+    (url ? "\n🏉 Play: "+url : "\n🏉 playjourneyman");
+}
+function legacyCopy(t){
+  try{
+    const ta = document.createElement("textarea");
+    ta.value = t;
+    ta.style.cssText = "position:fixed;top:0;left:0;opacity:0";
+    document.body.appendChild(ta);
+    ta.focus(); ta.select(); ta.setSelectionRange(0, t.length);
+    const ok = document.execCommand("copy");
+    ta.remove();
+    return ok;
+  }catch(e){ return false; }
+}
+$("btnShare").addEventListener("click", async () => {
+  const t = shareText();
+  if (navigator.share){
+    try{ await navigator.share({text:t}); return; }
+    catch(e){ if (e.name === "AbortError") return; }
+  }
+  let copied = false;
+  try{ await navigator.clipboard.writeText(t); copied = true; }catch(e){}
+  if (!copied) copied = legacyCopy(t);
+  if (copied){ toast("Copied to clipboard"); return; }
+  // last resort: show the text so it can be long-pressed and copied
+  const fb = $("shareFallback");
+  fb.textContent = t;
+  fb.style.display = "block";
+  toast("Long-press the text to copy");
+});
+$("btnAgain").addEventListener("click", () => {
+  $("ovResult").classList.remove("open");
+  startGame("practice");
+});
+// tap a column header to explain it (hover shows the same via title=)
+document.querySelectorAll("thead th[data-info]").forEach(th => {
+  th.addEventListener("click", () => toast(th.dataset.info));
+});
+
+/* ===================== stats / settings UI ===================== */
+function renderStats(){
+  const wp = stats.played ? Math.round(100*stats.wins/stats.played) : 0;
+  $("statGrid").innerHTML = [
+    [stats.played,"Played"],[wp+"%","Win rate"],[stats.streak,"Streak"],[stats.maxStreak,"Best streak"]
+  ].map(([v,l]) => '<div class="statbox"><div class="v">'+v+'</div><div class="l">'+l+'</div></div>').join("");
+  const max = Math.max(1, ...Object.values(stats.dist));
+  let html = "";
+  for (let i=1;i<=NORMAL_GUESSES;i++){
+    const c = stats.dist[i]||0;
+    const hit = G && G.mode==="daily" && G.won && G.guesses.length===i;
+    html += '<div class="distrow"><span>'+i+'</span><div class="distbar'+(hit?' hit':'')+'" style="width:'+Math.max(10, 100*c/max)+'%">'+c+'</div></div>';
+  }
+  $("dist").innerHTML = html;
+}
+
+function applyTheme(){ document.body.dataset.theme = settings.light ? "light" : "dark"; }
+function renderSettings(){
+  $("tglHard").classList.toggle("on", settings.hard);
+  $("tglLight").classList.toggle("on", settings.light);
+}
+$("tglHard").addEventListener("click", async () => {
+  settings.hard = !settings.hard; renderSettings(); await sSet("settings", settings);
+  toast(settings.hard ? "Hard mode on — next game" : "Hard mode off — next game");
+});
+$("tglLight").addEventListener("click", async () => {
+  settings.light = !settings.light; renderSettings(); applyTheme(); await sSet("settings", settings);
+});
+
+/* ===================== modals / tabs / toast ===================== */
+function openOv(id){ $(id).classList.add("open"); if(id==="ovStats") renderStats(); }
+$("btnHelp").addEventListener("click", ()=>openOv("ovHelp"));
+$("btnStats").addEventListener("click", ()=>openOv("ovStats"));
+$("btnSettings").addEventListener("click", ()=>openOv("ovSettings"));
+document.querySelectorAll(".overlay").forEach(ov => {
+  ov.addEventListener("click", e => { if (e.target === ov || e.target.closest("[data-close]")) ov.classList.remove("open"); });
+});
+let toastT;
+function toast(msg){ const t=$("toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove("show"),1800); }
+
+const tabDaily = $("tabDaily"), tabPractice = $("tabPractice");
+tabDaily.addEventListener("click", ()=>startGame("daily"));
+tabPractice.addEventListener("click", ()=>startGame("practice"));
+
+async function startGame(mode){
+  tabDaily.classList.toggle("on", mode==="daily");
+  tabPractice.classList.toggle("on", mode==="practice");
+  chipsEl.innerHTML = ""; 
+  if (mode === "daily"){
+    const done = await sGet(todayKey());
+    if (done){
+      // rebuild finished state so the day's result is viewable, not replayable
+      G = newGame("daily");
+      G.hard = done.hard; G.maxGuesses = done.hard?HARD_GUESSES:NORMAL_GUESSES;
+      G.guesses = done.guesses || []; G.over = true; G.won = done.won; G.revealed = 999;
+      render(); return;
+    }
+  }
+  G = newGame(mode);
+  render();
+}
+
+/* ===================== init ===================== */
+(async function init(){
+  await loadData();
+  const s = await sGet("settings"); if (s) settings = s;
+  const st = await sGet("stats"); if (st) stats = st;
+  applyTheme(); renderSettings();
+  $("coffeeMain").href = COFFEE_URL;
+  $("coffeeResult").href = COFFEE_URL;
+  let lo = Infinity, hi = -Infinity;
+  POOL.forEach(p => { if(p.first<lo) lo=p.first; if(p.last>hi) hi=p.last; });
+  $("dataYears").innerHTML = POOL.length + " players · seasons " + lo + "–" + hi +
+    '<br>Stats via <a href="https://www.nba.com/stats" target="_blank" rel="noopener">NBA.com</a> ' +
+    '(<a href="https://github.com/swar/nba_api" target="_blank" rel="noopener">nba_api</a>). Not affiliated with the NBA.';
+  $("dailyNo").textContent = "#" + (dailyIndex()+1);
+  await startGame("daily");
+  if (USING_FALLBACK) toast(POOL.length + " players (offline set)");
+  const seen = await sGet("seenHelp");
+  if (!seen){ openOv("ovHelp"); await sSet("seenHelp", true); }
+})();
+</script>
+</body>
+</html>
