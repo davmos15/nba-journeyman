@@ -3,3 +3,6 @@ __pycache__/
 .venv/
 .pytest_cache/
 *.rda
+
+# Local Netlify folder
+.netlify
