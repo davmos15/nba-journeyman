@@ -33,8 +33,9 @@ def primary_team(rows):
 
 
 def tag_decades(seasons, min_seasons=3):
-    """A decade qualifies if the player has >= min_seasons seasons whose end-year
-    falls in it (the spec's 'more than 2 seasons' rule). Returns sorted list."""
+    """A decade qualifies if the player has >= min_seasons seasons that STARTED
+    in it (the spec's 'more than 2 seasons' rule). Seasons are labelled by end
+    year, so the 1989-90 season (y=1990) counts as a 1980s season. Sorted list."""
     counts = {}
     for s in seasons:
         d = ((s["y"] - 1) // 10) * 10
