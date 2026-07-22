@@ -1,0 +1,27 @@
+name: Refresh NBA data
+on:
+  schedule:
+    - cron: "0 9 * * 1"   # Mondays 09:00 UTC
+  workflow_dispatch:
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Rebuild players.json
+        run: python build_players.py players.json
+      - name: Validate data contract
+        run: pytest test_players_json.py -q
+      - name: Commit if changed
+        run: |
+          if ! git diff --quiet players.json; then
+            git config user.name "github-actions"
+            git config user.email "actions@github.com"
+            git add players.json
+            git commit -m "chore: weekly NBA data refresh"
+            git push
+          fi
