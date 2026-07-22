@@ -69,3 +69,20 @@ def assemble_player(name, season_records):
         "decades": tag_decades(seasons),
         "seasons": seasons,
     }
+
+
+def classify(players, answer_min_games, guess_min_games):
+    """Set the `answer` flag, drop players below the guess threshold, and trim
+    `seasons` from guess-only players. Returns the kept players."""
+    out = []
+    for p in players:
+        answerable = p["games"] >= answer_min_games
+        guessable = p["games"] >= guess_min_games
+        if not (answerable or guessable):
+            continue
+        p = dict(p)
+        p["answer"] = answerable
+        if not answerable:
+            p.pop("seasons", None)
+        out.append(p)
+    return out

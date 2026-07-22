@@ -39,3 +39,25 @@ def test_assemble_player_shape():
     assert p["decades"] == [1990]
     assert p["seasons"][0]["y"] == 1996  # sorted ascending
     assert "answer" not in p  # answer flag added later by classify step
+
+from journeyman_build import classify
+
+def _mk(name, games, last, decades):
+    return {"name": name, "pos": "WING", "first": last-3, "last": last,
+            "teams": ["X"], "games": games, "points": games*10,
+            "decades": decades, "seasons": [{"y": last, "team": "X", "gp": 1,
+            "pts": 1, "reb": 1, "ast": 1, "stl": 0, "blk": 0}]}
+
+def test_classify_flags_and_trims():
+    players = [
+        _mk("Star", 900, 2015, [2010]),      # answerable
+        _mk("Journeyman", 200, 2015, [2010]),# guess-only
+        _mk("Scrub", 20, 2015, [2010]),      # dropped entirely
+    ]
+    out = classify(players, answer_min_games=400, guess_min_games=100)
+    names = {p["name"]: p for p in out}
+    assert "Scrub" not in names
+    assert names["Star"]["answer"] is True
+    assert "seasons" in names["Star"]
+    assert names["Journeyman"]["answer"] is False
+    assert "seasons" not in names["Journeyman"]  # trimmed
