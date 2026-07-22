@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Journeyman — NBA</title>
-<meta name="description" content="Guess the footy player from their career, one season at a time.">
+<meta name="description" content="Guess the NBA player from their career, one season at a time.">
 <meta name="theme-color" content="#1A2820">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNyIgZmlsbD0iIzFBMjgyMCIvPjxnIHRyYW5zZm9ybT0icm90YXRlKC00MCAxNiAxNikiPjxlbGxpcHNlIGN4PSIxNiIgY3k9IjE2IiByeD0iNi42IiByeT0iMTIuMiIgZmlsbD0iI0YyQzIzMCIgc3Ryb2tlPSIjMTcyNTFEIiBzdHJva2Utd2lkdGg9IjEuNSIvPjxsaW5lIHgxPSIxNiIgeTE9IjYuNCIgeDI9IjE2IiB5Mj0iMjUuNiIgc3Ryb2tlPSIjMTcyNTFEIiBzdHJva2Utd2lkdGg9IjEuNSIvPjxsaW5lIHgxPSIxMi44IiB5MT0iMTEuNSIgeDI9IjE5LjIiIHkyPSIxMS41IiBzdHJva2U9IiMxNzI1MUQiIHN0cm9rZS13aWR0aD0iMS41Ii8+PGxpbmUgeDE9IjEyLjYiIHkxPSIxNiIgeDI9IjE5LjQiIHkyPSIxNiIgc3Ryb2tlPSIjMTcyNTFEIiBzdHJva2Utd2lkdGg9IjEuNSIvPjxsaW5lIHgxPSIxMi44IiB5MT0iMjAuNSIgeDI9IjE5LjIiIHkyPSIyMC41IiBzdHJva2U9IiMxNzI1MUQiIHN0cm9rZS13aWR0aD0iMS41Ii8+PC9nPjwvc3ZnPg==">
 <link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNyIgZmlsbD0iIzFBMjgyMCIvPjxnIHRyYW5zZm9ybT0icm90YXRlKC00MCAxNiAxNikiPjxlbGxpcHNlIGN4PSIxNiIgY3k9IjE2IiByeD0iNi42IiByeT0iMTIuMiIgZmlsbD0iI0YyQzIzMCIgc3Ryb2tlPSIjMTcyNTFEIiBzdHJva2Utd2lkdGg9IjEuNSIvPjxsaW5lIHgxPSIxNiIgeTE9IjYuNCIgeDI9IjE2IiB5Mj0iMjUuNiIgc3Ryb2tlPSIjMTcyNTFEIiBzdHJva2Utd2lkdGg9IjEuNSIvPjxsaW5lIHgxPSIxMi44IiB5MT0iMTEuNSIgeDI9IjE5LjIiIHkyPSIxMS41IiBzdHJva2U9IiMxNzI1MUQiIHN0cm9rZS13aWR0aD0iMS41Ii8+PGxpbmUgeDE9IjEyLjYiIHkxPSIxNiIgeDI9IjE5LjQiIHkyPSIxNiIgc3Ryb2tlPSIjMTcyNTFEIiBzdHJva2Utd2lkdGg9IjEuNSIvPjxsaW5lIHgxPSIxMi44IiB5MT0iMjAuNSIgeDI9IjE5LjIiIHkyPSIyMC41IiBzdHJva2U9IiMxNzI1MUQiIHN0cm9rZS13aWR0aD0iMS41Ii8+PC9nPjwvc3ZnPg==">
@@ -229,7 +229,7 @@ tr.bonus td{color:var(--sherrin)}
 <body data-theme="dark">
 
 <header>
-  <div class="wordmark">JOURNEYMAN<small>FOOTY EDITION</small></div>
+  <div class="wordmark">JOURNEYMAN<small>NBA EDITION</small></div>
   <div class="hbtns">
     <a class="hbtn coffeebtn" id="coffeeMain" href="#" target="_blank" rel="noopener" aria-label="Buy me a coffee" title="Buy me a coffee">☕</a>
     <button class="hbtn" id="btnHelp" aria-label="How to play">?</button>
@@ -352,11 +352,11 @@ tr.bonus td{color:var(--sherrin)}
 
 <script>
 /* =====================================================================
-   JOURNEYMAN — FOOTY EDITION
+   JOURNEYMAN — NBA EDITION
    ---------------------------------------------------------------------
    Data is loaded at runtime from players.json (see loadData below), built
-   by build_players.py from fitzRoy's redistributed AFL Tables dataset.
-   Clubs are plain text + colour swatch only (no logos = no IP issues).
+   by build_players.py from NBA.com stats via nba_api.
+   Teams are plain text + colour swatch only (no logos = no IP issues).
    ===================================================================== */
 
 /* ┌─────────────────────────────────────────────────────────────────┐
