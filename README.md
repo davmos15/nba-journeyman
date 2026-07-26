@@ -23,7 +23,9 @@ rebounds, assists, steals, and blocks** for that season.
 - **Normal:** 8 guesses. **Hard mode:** 5 guesses, teams hidden, no clue chips.
 
 Come back every day for a fresh puzzle, share your result grid, and chase your
-streak — each game mode tracks its own.
+streak — each game mode tracks its own, and a missed day resets it. One go per
+puzzle per day: your progress is saved as you play, so closing the tab mid-game
+picks up where you left off rather than dealing a new player.
 
 ## Game modes
 

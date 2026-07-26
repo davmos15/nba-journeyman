@@ -2,17 +2,20 @@
 """Journeyman — NBA dataset builder.
 
 Fetches per-season player stats from nba_api (official stats.nba.com) and writes
-the season-aggregated players.json the game consumes. One call per season (~45
-total) rather than per-player — far fewer requests.
+the season-aggregated players.json the game consumes. One or two calls per
+season (~75 total) rather than per-player — far fewer requests.
 
 Two endpoints, because stats.nba.com's coverage differs by era:
-  * 1996-97 → present : LeagueDashPlayerStats (full rosters, every player).
+  * 1996-97 → present : LeagueDashPlayerStats (full rosters, every player),
+    called twice per season — once for the season line, once with the Starters
+    split, whose GP is that player's games started.
   * 1980-81 → 1995-96 : LeagueLeaders (this is the earliest per-season endpoint
     that reaches back to 1980; it returns only *qualified* players — those
-    meeting the season games/minutes minimum — so deep-bench or injury-shortened
-    seasons before 1996-97 may be missing. Acceptable: pre-1996 we mostly want
-    recognisable players anyway, and PLAYER_ID matches across both endpoints so
-    a career spanning the 1996 boundary merges correctly.)
+    meeting the season games/minutes minimum, and carrying no starter split —
+    so deep-bench or injury-shortened seasons before 1996-97 may be missing,
+    and those seasons have no games-started. Acceptable: pre-1996 we mostly
+    want recognisable players anyway, and PLAYER_ID matches across both
+    endpoints so a career spanning the 1996 boundary merges correctly.)
 
 Run:  python3 build_players.py players.json
 
@@ -30,7 +33,9 @@ OUT = sys.argv[1] if len(sys.argv) > 1 else "players.json"
 # Tunables -------------------------------------------------------------
 START_SEASON_YEAR = 1980   # first season's starting year -> "1980-81"
 DASH_START_YEAR   = 1996   # seasons starting >= this use LeagueDashPlayerStats
-ANSWER_MIN_GAMES  = 400    # career games to be a possible mystery answer
+ANSWER_MIN_STARTS = 200    # career games STARTED to be a possible mystery answer
+ANSWER_MIN_GAMES  = 400    # career games fallback, for careers older than the
+                           # starts data (pre-1996-97); see classify()
 GUESS_MIN_GAMES   = 100    # career games to appear in autocomplete
 REQUEST_PAUSE     = 0.6    # polite delay between season calls (seconds)
 MAX_RETRIES       = 4
@@ -56,17 +61,33 @@ def _retry(fn, label):
     raise RuntimeError(f"failed to fetch {label}: {last_err}")
 
 
+def _dash_frame(season, starter_bench=""):
+    """LeagueDashPlayerStats for one season, optionally limited to the games a
+    player STARTED (starter_bench="Starters"), in which case GP is that player's
+    games started for the season."""
+    return _retry(lambda: leaguedashplayerstats.LeagueDashPlayerStats(
+        season=season, per_mode_detailed="PerGame",
+        season_type_all_star="Regular Season",
+        starter_bench_nullable=starter_bench, timeout=60,
+    ).get_data_frames()[0], f"{season} {starter_bench or 'all'}")
+
+
 def fetch_rows(season):
     """Yield normalized per-season record dicts for one season, choosing the
-    endpoint by era. Keys: y, team, gp, pts, reb, ast, stl, blk (+ _pid, _name)."""
+    endpoint by era. Keys: y, team, gp, pts, reb, ast, stl, blk (+ _pid, _name),
+    plus `gs` (games started) for seasons the starter split covers — 1996-97
+    onwards. LeagueLeaders carries no starter data, so earlier seasons omit `gs`
+    and those careers fall back to the games threshold in classify()."""
     start_year = int(season[:4])
     end_year = start_year + 1
+    starts = None
     if start_year >= DASH_START_YEAR:
-        df = _retry(lambda: leaguedashplayerstats.LeagueDashPlayerStats(
-            season=season, per_mode_detailed="PerGame",
-            season_type_all_star="Regular Season", timeout=60,
-        ).get_data_frames()[0], season)
+        df = _dash_frame(season)
         name_col, team_col = "PLAYER_NAME", "TEAM_ABBREVIATION"
+        time.sleep(REQUEST_PAUSE)
+        # second pass: same season, starters-only split -> per-season games started
+        sdf = _dash_frame(season, "Starters")
+        starts = {int(r["PLAYER_ID"]): int(r["GP"]) for _, r in sdf.iterrows()}
     else:
         df = _retry(lambda: leagueleaders.LeagueLeaders(
             season=season, per_mode48="PerGame",
@@ -75,8 +96,9 @@ def fetch_rows(season):
         ).get_data_frames()[0], season)
         name_col, team_col = "PLAYER", "TEAM"
     for _, row in df.iterrows():
-        yield {
-            "_pid": int(row["PLAYER_ID"]),
+        pid = int(row["PLAYER_ID"])
+        rec = {
+            "_pid": pid,
             "_name": str(row[name_col]),
             "y": end_year,
             "team": str(row[team_col]),
@@ -87,6 +109,10 @@ def fetch_rows(season):
             "stl": round(float(row["STL"]), 1),
             "blk": round(float(row["BLK"]), 1),
         }
+        if starts is not None:
+            # absent from the starters split = started no games that season
+            rec["gs"] = starts.get(pid, 0)
+        yield rec
 
 
 def main():
@@ -110,10 +136,13 @@ def main():
         if name_counts[p["name"]] > 1:
             p["name"] = f'{p["name"]} ({p["teams"][0]}, {p["first"]})'
 
-    kept = classify(players, ANSWER_MIN_GAMES, GUESS_MIN_GAMES)
+    kept = classify(players, ANSWER_MIN_STARTS, ANSWER_MIN_GAMES, GUESS_MIN_GAMES)
     kept.sort(key=lambda p: -p["games"])
     answers = [p for p in kept if p["answer"]]
-    print(f"{len(kept)} guessable, {len(answers)} answerable")
+    on_starts = sum(1 for p in answers if p.get("starts", 0) >= ANSWER_MIN_STARTS)
+    print(f"{len(kept)} guessable, {len(answers)} answerable "
+          f"({on_starts} on {ANSWER_MIN_STARTS}+ starts, "
+          f"{len(answers) - on_starts} on the pre-1996 games fallback)")
 
     # sanity: report per-decade answerable counts
     from collections import Counter

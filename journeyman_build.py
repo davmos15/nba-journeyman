@@ -44,7 +44,9 @@ def tag_decades(seasons, min_seasons=3):
 
 
 def assemble_player(name, season_records):
-    """season_records: list of per-season dicts {y, team, gp, pts, reb, ast, stl, blk}.
+    """season_records: list of per-season dicts {y, team, gp, pts, reb, ast, stl, blk}
+    plus optional `gs` (games started; absent for seasons whose source has no
+    starter split — see build_players.py).
     Returns a player dict WITHOUT the `answer` flag (added later by classify)."""
     seasons = sorted(season_records, key=lambda r: r["y"])
     teams = []
@@ -58,6 +60,7 @@ def assemble_player(name, season_records):
         return tot / games if games else 0.0
     pos = infer_pos(wavg("pts"), wavg("reb"), wavg("ast"), wavg("blk"))
     points = round(sum(s["pts"] * s["gp"] for s in seasons))  # career points total
+    starts = sum(s["gs"] for s in seasons if s.get("gs") is not None)
     return {
         "name": name,
         "pos": pos,
@@ -65,18 +68,34 @@ def assemble_player(name, season_records):
         "last": seasons[-1]["y"],
         "teams": teams,
         "games": games,
+        "starts": starts,
         "points": points,
         "decades": tag_decades(seasons),
         "seasons": seasons,
     }
 
 
-def classify(players, answer_min_games, guess_min_games):
+def starts_covered(player):
+    """True when every season of the career carries games-started data, i.e. the
+    whole career sits inside the era the starter split reaches (1996-97 on)."""
+    return all(s.get("gs") is not None for s in player.get("seasons", []))
+
+
+def classify(players, answer_min_starts, answer_min_games, guess_min_games):
     """Set the `answer` flag, drop players below the guess threshold, and trim
-    `seasons` from guess-only players. Returns the kept players."""
+    `seasons` from guess-only players. Returns the kept players.
+
+    A player is answerable on STARTS — the mystery player should be someone who
+    actually started, not a long-serving bench body. Games-started only exists
+    from 1996-97 onwards (see build_players.py), so a career that reaches back
+    past that boundary can ALSO qualify the old way, on career games; without
+    that fallback every pre-1996 player would silently drop out of the pool.
+    """
     out = []
     for p in players:
-        answerable = p["games"] >= answer_min_games
+        answerable = p.get("starts", 0) >= answer_min_starts or (
+            not starts_covered(p) and p["games"] >= answer_min_games
+        )
         guessable = p["games"] >= guess_min_games
         if not (answerable or guessable):
             continue
