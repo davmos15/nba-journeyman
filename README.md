@@ -7,7 +7,10 @@ A daily puzzle for basketball nerds, with a twist: play the **All-Time** game, o
 pick a single **decade** and test how well you know the 80s, 90s, 2000s, 2010s,
 or 2020s.
 
-Prefer footy? There's a sister game: **[Journeyman — AFL](https://footy-journeyman.netlify.app)**.
+Sister games: **[Journeyman — MLB](https://mlb-journeyman.netlify.app)**,
+**[Journeyman — AFL](https://footy-journeyman.netlify.app)** and
+**[Globetrotter](https://country-globetrotter.netlify.app)** — all reachable
+from the *Play our other games* button at the top of the page.
 
 ## How to play
 

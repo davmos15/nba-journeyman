@@ -56,9 +56,9 @@ a.hbtn{color:inherit;text-decoration:none}
 .coffeebtn{font-size:17px}
 .coffeebtn:hover{background:var(--felt)}
 .crossplay{display:flex; justify-content:center; max-width:560px; margin:0 auto; padding:2px 16px 0}
-.crossplay a{display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:600;
-  color:var(--sherrin); text-decoration:none; border:1px solid var(--line); border-radius:999px; padding:4px 14px}
-.crossplay a:hover{background:var(--felt2)}
+.playother{display:inline-flex; align-items:center; gap:7px; font-size:12px; font-weight:600;
+  color:var(--sherrin); border:1px solid var(--line); border-radius:999px; padding:5px 15px}
+.playother:hover{background:var(--felt2)}
 
 /* ---------- mode tabs ---------- */
 .tabs{display:flex; gap:8px; padding:8px 16px; max-width:560px; width:100%; margin:0 auto}
@@ -196,6 +196,16 @@ tr.bonus td{color:var(--sherrin)}
   display:block; width:100%; margin-top:8px; border:1px solid var(--line);
   font-weight:600; font-size:14px; padding:13px; border-radius:var(--radius); color:var(--dim); text-align:center;
 }
+/* other games */
+.gamelink{display:flex; align-items:center; gap:12px; text-decoration:none; color:inherit;
+  background:var(--felt); border:1px solid var(--line); border-radius:var(--radius);
+  padding:13px 14px; margin-bottom:8px}
+.gamelink:hover{border-color:var(--sherrin); background:var(--felt2)}
+.gamelink .gi{font-size:22px; line-height:1}
+.gamelink .gt{flex:1; min-width:0}
+.gamelink .gt b{display:block; font-size:15px; font-weight:600}
+.gamelink .gt small{display:block; font-size:12px; color:var(--dim); margin-top:2px}
+.gamelink .ga{color:var(--sherrin); font-size:16px}
 /* stats */
 .statgrid{display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:16px}
 .statbox{background:var(--felt); border:1px solid var(--line); border-radius:8px; padding:10px 6px; text-align:center}
@@ -245,7 +255,7 @@ tr.bonus td{color:var(--sherrin)}
   </div>
 </header>
 
-<div class="crossplay"><a href="https://footy-journeyman.netlify.app" rel="noopener">🏉 Play Journeyman AFL →</a></div>
+<div class="crossplay"><button class="playother" id="btnGames">🎮 Play our other games</button></div>
 
 <div class="tabs">
   <button class="tab on" id="tabAll">All-Time<span class="sub" id="dailyNo">#1</span></button>
@@ -316,6 +326,28 @@ tr.bonus td{color:var(--sherrin)}
   <p>After each wrong guess you also get <b>clue chips</b> comparing your guess to the mystery player: whether they <b>shared a team</b>, whether they play the same <b>position</b> (Guard / Wing / Big), and whether the answer <b>debuted earlier or later</b> than your guess.</p>
   <p><b>Normal:</b> 8 guesses. <b>Hard mode:</b> 5 guesses, teams hidden, no clue chips.</p>
   <p>Daily All-Time and per-decade games, or hit Practice for unlimited random players.</p>
+</div></div>
+
+<!-- OTHER GAMES -->
+<div class="overlay" id="ovGames"><div class="sheet">
+  <button class="closex" data-close>✕</button>
+  <h2>Play our other games</h2>
+  <p>Same daily habit, different obsession.</p>
+  <a class="gamelink" href="https://mlb-journeyman.netlify.app" target="_blank" rel="noopener">
+    <span class="gi">⚾</span>
+    <span class="gt"><b>Journeyman — MLB</b><small>Guess the ballplayer from their career</small></span>
+    <span class="ga">→</span>
+  </a>
+  <a class="gamelink" href="https://footy-journeyman.netlify.app" target="_blank" rel="noopener">
+    <span class="gi">🏉</span>
+    <span class="gt"><b>Journeyman — AFL</b><small>Guess the footballer from their career</small></span>
+    <span class="ga">→</span>
+  </a>
+  <a class="gamelink" href="https://country-globetrotter.netlify.app" target="_blank" rel="noopener">
+    <span class="gi">🌍</span>
+    <span class="gt"><b>Globetrotter</b><small>Guess the country from its clues</small></span>
+    <span class="ga">→</span>
+  </a>
 </div></div>
 
 <!-- STATS -->
@@ -813,6 +845,7 @@ $("tglLight").addEventListener("click", async () => {
 /* ===================== modals / tabs / toast ===================== */
 function openOv(id){ $(id).classList.add("open"); if(id==="ovStats") renderStats(); }
 $("btnHelp").addEventListener("click", ()=>openOv("ovHelp"));
+$("btnGames").addEventListener("click", ()=>openOv("ovGames"));
 $("btnStats").addEventListener("click", ()=>openOv("ovStats"));
 $("btnSettings").addEventListener("click", ()=>openOv("ovSettings"));
 document.querySelectorAll(".overlay").forEach(ov => {
