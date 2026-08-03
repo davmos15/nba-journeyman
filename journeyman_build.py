@@ -44,7 +44,7 @@ def tag_decades(seasons, min_seasons=3):
 
 
 def assemble_player(name, season_records):
-    """season_records: list of per-season dicts {y, team, gp, pts, reb, ast, stl, blk}
+    """season_records: list of per-season dicts {y, team, gp, pts, fg3m, reb, ast, stl, blk}
     plus optional `gs` (games started; absent for seasons whose source has no
     starter split — see build_players.py).
     Returns a player dict WITHOUT the `answer` flag (added later by classify)."""

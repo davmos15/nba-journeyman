@@ -26,9 +26,9 @@ def test_tag_decades_multiple():
 
 def test_assemble_player_shape():
     recs = [
-        {"y": 1996, "team": "CHI", "gp": 82, "pts": 30.4, "reb": 6.6, "ast": 4.3, "stl": 2.2, "blk": 0.5},
-        {"y": 1997, "team": "CHI", "gp": 82, "pts": 28.7, "reb": 5.9, "ast": 3.5, "stl": 1.7, "blk": 0.5, "gs": 82},
-        {"y": 1998, "team": "CHI", "gp": 82, "pts": 28.7, "reb": 5.8, "ast": 3.5, "stl": 1.7, "blk": 0.5, "gs": 80},
+        {"y": 1996, "team": "CHI", "gp": 82, "pts": 30.4, "fg3m": 0.3, "reb": 6.6, "ast": 4.3, "stl": 2.2, "blk": 0.5},
+        {"y": 1997, "team": "CHI", "gp": 82, "pts": 28.7, "fg3m": 1.4, "reb": 5.9, "ast": 3.5, "stl": 1.7, "blk": 0.5, "gs": 82},
+        {"y": 1998, "team": "CHI", "gp": 82, "pts": 28.7, "fg3m": 0.4, "reb": 5.8, "ast": 3.5, "stl": 1.7, "blk": 0.5, "gs": 80},
     ]
     p = assemble_player("Michael Jordan", recs)
     # starts sum only the seasons that carry games-started (1996-97 onwards)
@@ -40,6 +40,7 @@ def test_assemble_player_shape():
     assert p["pos"] in ("GUARD", "WING", "BIG")
     assert p["decades"] == [1990]
     assert p["seasons"][0]["y"] == 1996  # sorted ascending
+    assert p["seasons"][1]["fg3m"] == 1.4  # per-season stats pass straight through
     assert "answer" not in p  # answer flag added later by classify step
 
 from journeyman_build import classify

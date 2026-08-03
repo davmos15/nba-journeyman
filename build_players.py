@@ -74,10 +74,12 @@ def _dash_frame(season, starter_bench=""):
 
 def fetch_rows(season):
     """Yield normalized per-season record dicts for one season, choosing the
-    endpoint by era. Keys: y, team, gp, pts, reb, ast, stl, blk (+ _pid, _name),
-    plus `gs` (games started) for seasons the starter split covers — 1996-97
-    onwards. LeagueLeaders carries no starter data, so earlier seasons omit `gs`
-    and those careers fall back to the games threshold in classify()."""
+    endpoint by era. Keys: y, team, gp, pts, fg3m, reb, ast, stl, blk (+ _pid,
+    _name), plus `gs` (games started) for seasons the starter split covers —
+    1996-97 onwards. LeagueLeaders carries no starter data, so earlier seasons
+    omit `gs` and those careers fall back to the games threshold in classify().
+    Threes need no such split: the 3-point line predates the 1980-81 cutoff, so
+    both endpoints carry FG3M for every season we fetch."""
     start_year = int(season[:4])
     end_year = start_year + 1
     starts = None
@@ -104,6 +106,7 @@ def fetch_rows(season):
             "team": str(row[team_col]),
             "gp": int(row["GP"]),
             "pts": round(float(row["PTS"]), 1),
+            "fg3m": round(float(row["FG3M"]), 1),
             "reb": round(float(row["REB"]), 1),
             "ast": round(float(row["AST"]), 1),
             "stl": round(float(row["STL"]), 1),

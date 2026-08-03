@@ -19,6 +19,18 @@ def test_answer_players_have_seasons():
             s = p["seasons"][0]
             assert set(s) >= {"y", "team", "gp", "pts", "reb", "ast", "stl", "blk"}
 
+def test_threes_present_once_the_data_carries_them():
+    """`fg3m` was added after the first build, so a players.json generated before
+    it simply has no threes (the game hides the column). Once a refresh brings
+    them in, every season must have one — the 3-point line predates 1980-81."""
+    answers = [p for p in load() if p.get("answer")]
+    seasons = [(p["name"], s) for p in answers for s in p["seasons"]]
+    if not any("fg3m" in s for _, s in seasons):
+        pytest.skip("players.json predates the fg3m field")
+    missing = [(n, s["y"]) for n, s in seasons if "fg3m" not in s]
+    assert not missing, missing[:5]
+
+
 def test_every_decade_has_a_pool():
     answers = [p for p in load() if p.get("answer")]
     for d in (1980, 1990, 2000, 2010, 2020):

@@ -93,6 +93,8 @@ thead th{
 .qual{display:block; font-size:8px; font-weight:600; letter-spacing:.5px; color:var(--dim); opacity:.55; margin-bottom:2px}
 /* full stat words when there's room; abbreviations on narrow screens */
 .hlong{display:none} .hshort{display:inline}
+/* threes are only mentioned once the loaded data actually carries them */
+.only3pm{display:none} body.has3pm .only3pm{display:inline}
 @media (min-width:560px){ .hlong{display:inline} .hshort{display:none} table{font-size:13px} thead th{padding:10px 7px} td{padding:10px 7px} }
 thead th:first-child, td:first-child{text-align:left}
 thead th:nth-child(2), td:nth-child(2){text-align:left}
@@ -270,6 +272,7 @@ tr.bonus td{color:var(--sherrin)}
         <th data-info="Team that season (tap for full name)." title="Team that season.">Team</th>
         <th data-info="Games played that season." title="Games played that season."><span class="hlong">Games</span><span class="hshort">GP</span></th>
         <th data-info="Points per game that season." title="Points per game."><span class="qual">avg</span><span class="hlong">Points</span><span class="hshort">PPG</span></th>
+        <th id="th3pm" data-info="Three-pointers made per game that season." title="Three-pointers made per game."><span class="qual">avg</span><span class="hlong">Threes</span><span class="hshort">3PM</span></th>
         <th data-info="Rebounds per game that season." title="Rebounds per game."><span class="qual">avg</span><span class="hlong">Rebounds</span><span class="hshort">RPG</span></th>
         <th data-info="Assists per game that season." title="Assists per game."><span class="qual">avg</span><span class="hlong">Assists</span><span class="hshort">APG</span></th>
         <th data-info="Steals per game that season." title="Steals per game."><span class="qual">avg</span><span class="hlong">Steals</span><span class="hshort">SPG</span></th>
@@ -308,8 +311,8 @@ tr.bonus td{color:var(--sherrin)}
   <h2>How to play</h2>
   <p>A mystery player's <b>career record</b> is revealed one season at a time, in a random order.</p>
   <p>Every wrong guess reveals <b>another season</b> of their career. Fewer seasons, more bragging rights.</p>
-  <div class="examplerow">1997&nbsp;&nbsp;■ CHI&nbsp;&nbsp;82&nbsp;&nbsp;29.6&nbsp;&nbsp;5.9&nbsp;&nbsp;4.3&nbsp;&nbsp;1.7&nbsp;&nbsp;0.5</div>
-  <p>Each season shows the <b>team</b>, <b>games played</b>, and per-game averages for <b>points</b>, <b>rebounds</b>, <b>assists</b>, <b>steals</b>, and <b>blocks</b>. Tap any column heading — or a team code — for what it means.</p>
+  <div class="examplerow">1997&nbsp;&nbsp;■ CHI&nbsp;&nbsp;82&nbsp;&nbsp;29.6<span class="only3pm">&nbsp;&nbsp;1.4</span>&nbsp;&nbsp;5.9&nbsp;&nbsp;4.3&nbsp;&nbsp;1.7&nbsp;&nbsp;0.5</div>
+  <p>Each season shows the <b>team</b>, <b>games played</b>, and per-game averages for <b>points</b>, <span class="only3pm"><b>threes made</b>, </span><b>rebounds</b>, <b>assists</b>, <b>steals</b>, and <b>blocks</b>. Tap any column heading — or a team code — for what it means.</p>
   <p>After each wrong guess you also get <b>clue chips</b> comparing your guess to the mystery player: whether they <b>shared a team</b>, whether they play the same <b>position</b> (Guard / Wing / Big), and whether the answer <b>debuted earlier or later</b> than your guess.</p>
   <p><b>Normal:</b> 8 guesses. <b>Hard mode:</b> 5 guesses, teams hidden, no clue chips.</p>
   <p>Daily All-Time and per-decade games, or hit Practice for unlimited random players.</p>
@@ -402,6 +405,10 @@ const FALLBACK = [{"name":"LeBron James","pos":"GUARD","first":2004,"last":2026,
 let POOL = [];      // everything guessable (autocomplete + clue chips)
 let ANSWERS = [];   // subset that can be the mystery player
 let USING_FALLBACK = false;
+// `fg3m` arrived after the first build, so a players.json (or the embedded
+// fallback) from before it has no threes at all. Rather than show a column of
+// dashes, we drop the column entirely until the data carries it.
+let HAS_3PM = false;
 
 async function loadData(){
   let data = null;
@@ -412,6 +419,9 @@ async function loadData(){
   if (!data || !data.length){ data = FALLBACK; USING_FALLBACK = true; }
   POOL = data;
   ANSWERS = data.filter(p => p.answer && p.seasons && p.seasons.length);
+  HAS_3PM = ANSWERS.some(p => p.seasons.some(s => s.fg3m != null));
+  document.getElementById("th3pm").hidden = !HAS_3PM;
+  document.body.classList.toggle("has3pm", HAS_3PM);
 }
 function careerBlurb(p){ return p.games+' games · '+p.points.toLocaleString()+' pts · '+p.first+'–'+p.last; }
 
@@ -522,6 +532,7 @@ function teamCell(team, hard, hardIdx){
 }
 function render(){
   const p = G.player, seasons = p.seasons;
+  const COLS = HAS_3PM ? 9 : 8;  // year, team, gp + the per-game stats
   // hard mode: stable team letters in order of first appearance
   const clubOrder = [];
   seasons.forEach(s => { if(!clubOrder.includes(s.team)) clubOrder.push(s.team); });
@@ -539,17 +550,18 @@ function render(){
       const s = seasons[shownIdx[r]];
       const num = v => (v == null ? "–" : v.toFixed(1));
       rows += '<tr class="season"><td>'+s.y+'</td><td>'+teamCell(s.team,G.hard,clubOrder.indexOf(s.team))+
-              '</td><td>'+s.gp+'</td><td>'+num(s.pts)+'</td><td>'+num(s.reb)+'</td><td>'+num(s.ast)+
+              '</td><td>'+s.gp+'</td><td>'+num(s.pts)+'</td>'+(HAS_3PM ? '<td>'+num(s.fg3m)+'</td>' : '')+
+              '<td>'+num(s.reb)+'</td><td>'+num(s.ast)+
               '</td><td>'+num(s.stl)+'</td><td>'+num(s.blk)+'</td></tr>';
     } else {
-      rows += '<tr class="masked"><td>··</td><td>––––</td><td>··</td><td>··</td><td>··</td><td>··</td><td>··</td><td>··</td></tr>';
+      rows += '<tr class="masked"><td>··</td><td>––––</td>'+'<td>··</td>'.repeat(COLS-2)+'</tr>';
     }
   }
   // bonus clue rows (normal mode only), unlocked after all seasons shown
   if (!G.hard){
     const extra = G.revealed - seasons.length;
-    if (extra >= 1) rows += '<tr class="season bonus"><td colspan="8">POSITION: '+p.pos+'</td></tr>';
-    if (extra >= 2) rows += '<tr class="season bonus"><td colspan="8">CAREER: '+p.games+' games · '+p.points.toLocaleString()+' pts</td></tr>';
+    if (extra >= 1) rows += '<tr class="season bonus"><td colspan="'+COLS+'">POSITION: '+p.pos+'</td></tr>';
+    if (extra >= 2) rows += '<tr class="season bonus"><td colspan="'+COLS+'">CAREER: '+p.games+' games · '+p.points.toLocaleString()+' pts</td></tr>';
   }
   tbody.innerHTML = rows;
 

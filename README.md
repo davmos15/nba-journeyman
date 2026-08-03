@@ -13,7 +13,7 @@ Prefer footy? There's a sister game: **[Journeyman — AFL](https://footy-journe
 
 A mystery player's career record appears one season at a time, in a random
 order. Each row shows the **team**, **games played**, and per-game **points,
-rebounds, assists, steals, and blocks** for that season.
+threes made, rebounds, assists, steals, and blocks** for that season.
 
 - Every wrong guess reveals **another season**. The fewer seasons you need, the
   better your score.
